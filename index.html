@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Calculator</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+
+</head>
+<body class="h-screen text-black bg-[url('https://www.colosseum.org/_app/immutable/assets/hero-elements-copy.13b3a983.png')] bg-cover">
+    <div class="h-full container flex items-center justify-end">
+        <div class="card border shadow-2xl p-4 w-96 bg-white bg-opacity-70 rounded-2xl ">
+            <div class="flex items-center justify-between">
+                <h1 class="font-medium text-2xl">Calculadora de tiempo de trabajo</h1>
+                <div>
+                    <svg width="55" height="56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M47.82 28.12c0-11.296-9.165-20.46-20.46-20.46-11.296 0-20.46 9.165-20.46 20.46 0 11.296 9.164 20.46 20.46 20.46 11.295 0 20.46-9.164 20.46-20.46Z" stroke="#000" stroke-width="3.41" stroke-miterlimit="10"/><path d="m23.132 36.478 12.196-7.367a1.161 1.161 0 0 0 0-1.982L23.132 19.76a1.148 1.148 0 0 0-1.74.992v14.733a1.149 1.149 0 0 0 1.74.992Z" fill="#000"/></svg>
+                </div>
+            </div>
+            <form action="#" class="flex flex-col text-lg">
+                <div class="flex justify-between gap-3">
+                    <div class="text-center" >
+                        <label class="font-normal">Ingreso</label>
+                        <input type="time" class="text-[22px] rounded-md border-0 w-[104px]">
+                    </div>
+                    <div class="text-center" >
+                        <label class="font-normal">Salida</label>
+                        <input type="time" class="rounded-md border-0 w-[104px]">
+                    </div>
+                    <div class="text-center" >
+                        <label class="font-normal">Descanso</label>
+                        <input type="time" step="60" class="rounded-md border-0 w-[104px]">
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="text-center w-full" >
+                        <label class="font-normal">Calendario</label>
+                        <input type="text" class="rounded-md border-0 text-center text-[22px] w-full" placeholder="Marzo 2024">
+                    </div>
+                </div>
+                <div class="flex justify-between gap-3">
+                    <div class="text-center">
+                        <label class="font-normal">Precio/Hora</label>
+                        <input type="text" class="rounded-md border-0 text-center text-[22px] w-full" placeholder="10 PEN">
+                    </div>
+                    <div class="text-center" >
+                        <label class="font-normal">Total Horas</label>
+                        <input type="text" step="60" class="rounded-md border-0 text-center text-[22px] w-full" placeholder="200 Horas">
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="text-center w-full" >
+                        <label class="font-normal">Monto total</label>
+                        <input type="text" class="rounded-md border-0 text-center text-[22px] w-full" placeholder="200 PEN">
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="text-center w-full" >
+                        <label class="font-normal">Resumen</label>
+                        <button class="text-white text-2xl bg-black px-4 py-2 rounded w-full">
+                            Imprimir
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
