@@ -1,70 +1,125 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Calculator</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <title>Calculadora de Sueldo</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
-<body class="h-screen text-black bg-[url('https://www.colosseum.org/_app/immutable/assets/hero-elements-copy.13b3a983.png')] bg-cover">
-    <div class="h-full container flex items-center justify-end">
-        <div class="card border shadow-2xl p-4 w-96 bg-white bg-opacity-70 rounded-2xl ">
-            <div class="flex items-center justify-between">
-                <h1 class="font-medium text-2xl">Calculadora de tiempo de trabajo</h1>
-                <div>
-                    <svg width="55" height="56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M47.82 28.12c0-11.296-9.165-20.46-20.46-20.46-11.296 0-20.46 9.165-20.46 20.46 0 11.296 9.164 20.46 20.46 20.46 11.295 0 20.46-9.164 20.46-20.46Z" stroke="#000" stroke-width="3.41" stroke-miterlimit="10"/><path d="m23.132 36.478 12.196-7.367a1.161 1.161 0 0 0 0-1.982L23.132 19.76a1.148 1.148 0 0 0-1.74.992v14.733a1.149 1.149 0 0 0 1.74.992Z" fill="#000"/></svg>
+
+<body>
+
+    <div class="container">
+
+        <div class="calculator_card">
+            <div class="card_header">
+                <h1>Calculadora de tiempo de trabajo</h1>
+                <span>
+                    <svg width="55" height="56" viewBox="0 0 55 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M47.8194 28.1202C47.8194 16.8245 38.655 7.66016 27.3594 7.66016C16.0638 7.66016 6.89941 16.8245 6.89941 28.1202C6.89941 39.4158 16.0638 48.5802 27.3594 48.5802C38.655 48.5802 47.8194 39.4158 47.8194 28.1202Z"
+                            stroke="black" stroke-width="3.41" stroke-miterlimit="10" />
+                        <path
+                            d="M23.1312 36.4785L35.3273 29.1108C35.4973 29.0072 35.6378 28.8616 35.7353 28.6881C35.8328 28.5145 35.884 28.3188 35.884 28.1197C35.884 27.9207 35.8328 27.7249 35.7353 27.5514C35.6378 27.3778 35.4973 27.2323 35.3273 27.1287L23.1312 19.761C22.9564 19.6562 22.7569 19.5999 22.5531 19.5977C22.3493 19.5955 22.1486 19.6476 21.9716 19.7486C21.7946 19.8496 21.6477 19.9958 21.5458 20.1723C21.444 20.3489 21.3909 20.5493 21.3921 20.7531V35.4864C21.3909 35.6902 21.444 35.8906 21.5458 36.0671C21.6477 36.2436 21.7946 36.3899 21.9716 36.4909C22.1486 36.5918 22.3493 36.6439 22.5531 36.6417C22.7569 36.6396 22.9564 36.5832 23.1312 36.4785Z"
+                            fill="black" />
+                    </svg>
+                </span>
+
+            </div>
+            <div class="card_body">
+                <div class="form_row">
+                    <div class="input_group">
+                        <label for="start_time">Ingreso</label>
+                        <input type="time" class="btn btn-white" id="horaEntrada" value="10:00">
+                    </div>
+                    <div class="input_group">
+                        <label for="start_time">Salida</label>
+                        <input type="time" class="btn btn-white" id="horaSalida" value="11:30">
+                    </div>
+                    <div class="input_group">
+                        <label for="start_time">Descanso</label>
+                        <input type="input" class="btn btn-white" value="00:00">
+                    </div>
+                </div>
+
+                <div class="form_row">
+                    <div class="input_group">
+                        <label for="start_time">Calendario</label>
+                        <input type="button" id="seleccionarFechas" class="btn btn-white" value="Marzo 2024">
+                    </div>
+                </div>
+
+
+                <div class="form_row">
+                    <div class="input_group">
+                        <label for="start_time">Precio/Hora</label>
+                        <input type="text" id="precio_hora" class="btn btn-white" value="10" />
+                    </div>
+                    <div class="input_group">
+                        <label for="start_time">Total Horas</label>
+                        <input type="button" id="total_horas" class="btn btn-white" value="200 Horas">
+                    </div>
+                </div>
+
+                <div class="form_row">
+                    <div class="input_group">
+                        <label for="start_time">Monto Total</label>
+                        <input type="button" id="monto_total" class="btn btn-white" value="2000 PEN">
+                    </div>
+                </div>
+
+                <div class="form_row">
+                    <div class="input_group">
+                        <label for="start_time">Resumen</label>
+                        <button class="print_button"  data-bs-toggle="modal" data-bs-target="#exampleModal">Imprimir</button>
+                    </div>
                 </div>
             </div>
-            <form action="#" class="flex flex-col text-lg">
-                <div class="flex justify-between gap-3">
-                    <div class="text-center" >
-                        <label class="font-normal">Ingreso</label>
-                        <input type="time" class="text-[22px] rounded-md border-0 w-[104px]">
-                    </div>
-                    <div class="text-center" >
-                        <label class="font-normal">Salida</label>
-                        <input type="time" class="rounded-md border-0 w-[104px]">
-                    </div>
-                    <div class="text-center" >
-                        <label class="font-normal">Descanso</label>
-                        <input type="time" step="60" class="rounded-md border-0 w-[104px]">
-                    </div>
-                </div>
-                <div class="flex">
-                    <div class="text-center w-full" >
-                        <label class="font-normal">Calendario</label>
-                        <input type="text" class="rounded-md border-0 text-center text-[22px] w-full" placeholder="Marzo 2024">
-                    </div>
-                </div>
-                <div class="flex justify-between gap-3">
-                    <div class="text-center">
-                        <label class="font-normal">Precio/Hora</label>
-                        <input type="text" class="rounded-md border-0 text-center text-[22px] w-full" placeholder="10 PEN">
-                    </div>
-                    <div class="text-center" >
-                        <label class="font-normal">Total Horas</label>
-                        <input type="text" step="60" class="rounded-md border-0 text-center text-[22px] w-full" placeholder="200 Horas">
-                    </div>
-                </div>
-                <div class="flex">
-                    <div class="text-center w-full" >
-                        <label class="font-normal">Monto total</label>
-                        <input type="text" class="rounded-md border-0 text-center text-[22px] w-full" placeholder="200 PEN">
-                    </div>
-                </div>
-                <div class="flex">
-                    <div class="text-center w-full" >
-                        <label class="font-normal">Resumen</label>
-                        <button class="text-white text-2xl bg-black px-4 py-2 rounded w-full">
-                            Imprimir
-                        </button>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-start">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Entrada</th>
+                                    <th>Salida</th>
+                                    <th>Descanso</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fechasSeleccionadasContainer"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
+    <script src="calculator.js"></script>
+
+
 </body>
+
 </html>
