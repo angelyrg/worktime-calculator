@@ -13,6 +13,10 @@ body{
     font-size: 17px;
 }
 
+.navbar{
+    height: 80px;
+}
+
 .main_image{
     width: 100%;
     position: absolute;
@@ -21,9 +25,9 @@ body{
     z-index: -1;
 }
 
-.container{
+.main_container{
     max-width: 1200px;
-    height: 100vh;
+    height: calc(100vh - 80px);
     margin: 0 auto;
     display: flex;
     justify-content: end;
