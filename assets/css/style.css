@@ -5,7 +5,8 @@
 
 body{
     /* background-image: url('https://approval.studio/wp-content/uploads/elementor/thumbs/branding-story-of-adidas-q8q1visjba9olaig1puawb8kzs2vo71tyd5c4zsqwg.jpg'); */
-    background-image: url('https://i.pinimg.com/originals/e1/c0/9d/e1c09d57a0aa792e014fa658a17295a0.jpg');
+    /* background-image: url('https://i.pinimg.com/originals/e1/c0/9d/e1c09d57a0aa792e014fa658a17295a0.jpg'); */
+    background-image: url('https://images.pexels.com/photos/5346459/pexels-photo-5346459.jpeg');
     background-position: center;
     background-size: cover;
 
@@ -15,6 +16,10 @@ body{
 
 .navbar{
     height: 80px;
+}
+
+.flags{
+    display: flex;
 }
 
 .main_image{
@@ -39,7 +44,7 @@ body{
 
 .calculator_card{
     background-color: rgba(255, 255, 255, 0.6);
-    max-width: 380px;
+    width: 380px;
     border-radius: 20px;
     /* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5); */
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.5); 
@@ -110,3 +115,19 @@ body{
     background-color:#303030;
     
 }
+
+.precio_hora_container{
+    width: 100%;
+    display: flex;
+    gap: 5px;
+}
+
+.precio_hora_container input{
+    width: 60%;
+}
+.precio_hora_container select{
+    border-radius: 5px;
+    border: none;
+    /* width: 40%; */
+}
+

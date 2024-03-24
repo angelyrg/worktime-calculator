@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+    
     let fechasSeleccionadas = {};
     let entradaDefault = document.getElementById('horaEntrada').value;
     let salidaDefault = document.getElementById('horaSalida').value;
+    let descansoDefault = parseInt(document.getElementById('descanso').value);
 
-    // Actualización del manejo de cambio para las horas predeterminadas
     document.getElementById('horaEntrada').addEventListener('change', function () {
         entradaDefault = this.value;
     });
@@ -12,8 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
         salidaDefault = this.value;
     });
 
+    document.getElementById('descanso').addEventListener('change', function () {
+        descansoDefault = parseInt(this.value);
+    });
+
     document.getElementById('seleccionarFechas').addEventListener('click', () => {
-        flatpickr("#fechasSeleccionadasContainer", {
+        flatpickr("#calendarioContainer", {
             mode: "multiple",
             dateFormat: "Y-m-d",
             enableTime: false,
@@ -24,71 +29,125 @@ document.addEventListener('DOMContentLoaded', () => {
                     const dateString = date.toISOString().substring(0, 10);
                     fechasActualizadas[dateString] = fechasSeleccionadas[dateString] || {
                         entrada: entradaDefault,
-                        salida: salidaDefault
+                        salida: salidaDefault,
+                        descanso: descansoDefault
                     };
                 });
                 fechasSeleccionadas = fechasActualizadas;
                 actualizarUIFechas();
-                calcularHorasYTotal(); // Mover el cálculo aquí
-            }
+                calcularHorasYTotal();
+            },
+            onReady: function(selectedDates, dateStr, instance) {
+                const okButton = document.createElement("button");
+                okButton.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 32 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M29.75 2L10.5 24L2.25 15.75" stroke="black" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+                okButton.className = "border-0 px-3 py-2 rounded-3";
+                okButton.addEventListener("click", function() {
+                    instance.close();
+                });
+                
+                instance.calendarContainer.appendChild(okButton);
+            },
         }).open();
     });
 
-    
-
-    // Se reutilizan las funciones agregarCamposFecha, actualizarUIFechas sin cambios
     function actualizarUIFechas() {
         const container = document.getElementById('fechasSeleccionadasContainer');
-        container.innerHTML = ''; // Limpiar el contenedor
-        Object.entries(fechasSeleccionadas).forEach(([fecha, horas]) => {
-            agregarCamposFecha(fecha, horas);
+        container.innerHTML = '';
+        Object.entries(fechasSeleccionadas).forEach(([fecha, detalles]) => {
+            container.innerHTML += `
+                <tr>
+                    <td>${fecha}</td>
+                    <td>${detalles.entrada}</td>
+                    <td>${detalles.salida}</td>
+                    <td>${detalles.descanso} mins</td>
+                </tr>
+            `;
         });
     }
 
-    function agregarCamposFecha(fecha, horas) {
-        console.log("Agregando campos");
-        const container = document.getElementById('fechasSeleccionadasContainer');
-        // const tr = document.createElement('tr');
-        container.innerHTML += `
-            <tr>
-                <td>${fecha}</td>
-                <td class="horaEntrada" data-fecha="${fecha}">
-                    ${horas.entrada}
-                </td>
-                <td class="horaSalida" data-fecha="${fecha}">
-                    ${horas.salida}
-                </td>
-                <td></td>
-            </tr>
-        `;
-        // container.innerHTML = tr;
-
-        container.querySelector('.horaEntrada').addEventListener('change', function() {
-            fechasSeleccionadas[this.dataset.fecha].entrada = this.value;
-        });
-
-        container.querySelector('.horaSalida').addEventListener('change', function() {
-            fechasSeleccionadas[this.dataset.fecha].salida = this.value;
-        });
-    }
-
-    // Modifica esta función para calcular también el total a pagar
     function calcularHorasYTotal() {
         let totalHoras = 0;
-        const pagoPorHora = parseFloat(document.getElementById('precio_hora').value);
         Object.keys(fechasSeleccionadas).forEach(fecha => {
-            const horas = fechasSeleccionadas[fecha];
-            const entrada = dayjs(`${fecha}T${horas.entrada}`);
-            const salida = dayjs(`${fecha}T${horas.salida}`);
-            const diferencia = salida.diff(entrada, 'hour', true);
-            totalHoras += diferencia;
+            const { entrada, salida, descanso } = fechasSeleccionadas[fecha];
+            const horaEntrada = dayjs(`${fecha}T${entrada}`);
+            const horaSalida = dayjs(`${fecha}T${salida}`);
+            const horasTrabajadas = horaSalida.diff(horaEntrada, 'hour', true) - (descanso / 60);
+            totalHoras += horasTrabajadas;
+
+            // Actualizar fechasSeleccionadas con las horas trabajadas y descanso
+            fechasSeleccionadas[fecha].horasTrabajadas = horasTrabajadas;
         });
+        const pagoPorHora = parseFloat(document.getElementById('precio_hora').value);
+        const monedaSeleccionada = document.getElementById('moneda').value;
         const totalAPagar = totalHoras * pagoPorHora;
 
-        // document.getElementById('resultado').textContent = `Total horas trabajadas: ${totalHoras.toFixed(2)} horas. Total a pagar: ${totalAPagar.toFixed(2)}`;
-
-        document.getElementById('total_horas').value  = `${totalHoras.toFixed(2)} Horas`;
-        document.getElementById('monto_total').value  = `${totalAPagar.toFixed(2)} PEN`;
-
+        document.getElementById('total_horas').value = `${totalHoras.toFixed(2)} Horas`;
+        document.getElementById('monto_total').value = `${totalAPagar.toFixed(2)} ${monedaSeleccionada}`;
     }
+
+
+
+    const btnDescargar = document.getElementById('btnDescargar');
+    btnDescargar.addEventListener('click', () => descargarPDF(fechasSeleccionadas));
+
+    
 });
+
+
+function descargarPDF(fechasSeleccionadas) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({
+      // Ajusta los márgenes del documento
+      // Los valores aquí son los predeterminados, ajusta según necesites
+      margins: { top: 10, bottom: 10, left: 10, right: 10 },
+    });
+
+    let yPosition = 20; // Inicia un poco más abajo para dar espacio al encabezado
+    const fontSize = 10; // Define un tamaño de fuente uniforme para todo el texto
+    doc.setFontSize(fontSize); // Aplica el tamaño de fuente
+
+    // Define un espaciado vertical menor para que los textos estén más "pegados"
+    const lineSpacing = 5;
+
+    // Encabezado
+    doc.text(`Nombre: ${document.getElementById('nombreUsuario').value}`, 10, yPosition);
+    yPosition += lineSpacing; // Usa el espaciado vertical personalizado
+    doc.text(`Pago por hora: ${document.getElementById('precio_hora').value} ${document.getElementById('moneda').value}`, 10, yPosition);
+    yPosition += lineSpacing + 5; // Agrega un poco más de espacio antes de la tabla
+
+    // Títulos de columnas para la tabla
+    doc.text("Fecha", 10, yPosition);
+    doc.text("Entrada", 40, yPosition);
+    doc.text("Salida", 70, yPosition);
+    doc.text("Descanso", 100, yPosition);
+    yPosition += lineSpacing;
+
+    // Iterar sobre fechas seleccionadas y añadir a la tabla
+    Object.keys(fechasSeleccionadas).forEach(fecha => {
+        const { entrada, salida, descanso } = fechasSeleccionadas[fecha];
+        doc.text(fecha, 10, yPosition);
+        doc.text(entrada, 40, yPosition);
+        doc.text(salida, 70, yPosition);
+        doc.text(`${descanso} min`, 100, yPosition);
+        yPosition += lineSpacing;
+
+        // Asegurar que no se desborde la página, añadiendo una nueva si es necesario
+        if (yPosition > 280) {
+            doc.addPage();
+            yPosition = 10;
+        }
+    });
+
+    // Resumen
+    yPosition += 5; // Agrega un poco más de espacio antes del resumen
+    doc.text(`Total horas: ${document.getElementById('total_horas').value}`, 10, yPosition);
+    yPosition += lineSpacing;
+    doc.text(`Monto total: ${document.getElementById('monto_total').value}`, 10, yPosition);
+
+    doc.save('resumen-sueldo.pdf');
+}
+
+

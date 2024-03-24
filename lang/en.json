@@ -1,0 +1,26 @@
+{
+    "navbar" :{
+        "change_lang" : "Change Language"
+    },
+    "main_form" : {
+        "title" : "Work time calculator",
+        "start_time" : "Start time",
+        "finish_time" : "End time",
+        "break_time" : "Break",
+        "calendar" : "Calendar",
+        "price_hour" : "Price/Hour",
+        "total_hours" : "Total Hours",
+        "total_amount" : "Total Amount",
+        "resume" : "Resume",
+        "resume_btn" : "See resume"
+    },
+    "resume_modal" : {
+        "fullname" : "Full name",
+        "table_date" : "Date",
+        "table_start" : "Start time",
+        "table_end" : "End time",
+        "table_break" : "Break",
+        "save_pdf" : "Save PDF"
+    }
+
+}

@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/img/isotipo-white.svg" type="image/x-icon">
     <title>Calculadora de Sueldo</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -20,10 +21,34 @@
             <a class="navbar-brand" href="#">
                 <img src="assets/img/logotipo.svg" class="img-fluid" width="100" alt="Tu time">
             </a>
-            <div class="langs">
-                <img width="48" height="48" src="https://img.icons8.com/color/48/spain-2.png" alt="spain-2" />
-                <img width="48" height="48" src="https://img.icons8.com/color/48/great-britain.png" alt="great-britain" />
+            <!-- <div class="flags" id="flags">
+                <div class="flag-item" data-language="es">
+                    <img width="48" height="48" src="https://img.icons8.com/color/48/spain-2.png" alt="spain-2" />
+                </div>
+                <div class="flag-item" data-language="en">
+                    <img width="48" height="48" src="https://img.icons8.com/color/48/great-britain.png" alt="great-britain" />
+                </div>
+            </div> -->
+
+            <div class="dropdown" id="languageDropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    Cambiar idioma
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li>
+                        <a class="dropdown-item flag-item" data-language="es" href="#">
+                            <img width="24" height="24" src="https://img.icons8.com/color/48/spain-2.png" alt="Español" /> Español
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item flag-item" data-language="en" href="#">
+                            <img width="24" height="24" src="https://img.icons8.com/color/48/great-britain.png" alt="English" /> English
+                        </a>
+                    </li>
+                </ul>
             </div>
+
+            
         </div>
     </nav>
 
@@ -31,7 +56,7 @@
 
         <div class="calculator_card">
             <div class="card_header">
-                <h1>Calculadora de tiempo de trabajo</h1>
+                <h1 data-section="main_form" data-value="title">Calculadora de tiempo de trabajo</h1>
                 <span>
                     <svg width="55" height="56" viewBox="0 0 55 56" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -47,49 +72,57 @@
             <div class="card_body">
                 <div class="form_row">
                     <div class="input_group">
-                        <label for="start_time">Ingreso</label>
+                        <label for="horaEntrada" data-section="main_form" data-value="start_time">Ingreso</label>
                         <input type="time" class="btn btn-white" id="horaEntrada" value="10:00">
                     </div>
                     <div class="input_group">
-                        <label for="start_time">Salida</label>
+                        <label for="horaSalida" data-section="main_form" data-value="finish_time">Salida</label>
                         <input type="time" class="btn btn-white" id="horaSalida" value="11:30">
                     </div>
                     <div class="input_group">
-                        <label for="start_time">Descanso</label>
-                        <input type="input" class="btn btn-white" value="00:00">
+                        <label for="descanso" data-section="main_form" data-value="break_time">Descanso</label>
+                        <input type="number" class="btn btn-white" id="descanso" value="45" placeholder="45">
                     </div>
                 </div>
 
                 <div class="form_row">
                     <div class="input_group">
-                        <label for="start_time">Calendario</label>
+                        <label for="seleccionarFechas" data-section="main_form" data-value="calendar">Calendario</label>
                         <input type="button" id="seleccionarFechas" class="btn btn-white" value="Marzo 2024">
+                        <div id="calendarioContainer"></div>
                     </div>
                 </div>
 
 
                 <div class="form_row">
                     <div class="input_group">
-                        <label for="start_time">Precio/Hora</label>
-                        <input type="text" id="precio_hora" class="btn btn-white" value="10" />
+                        <label for="precio_hora" data-section="main_form" data-value="price_hour">Precio/Hora</label>
+                        <div class="precio_hora_container">
+                            <input type="text" id="precio_hora" value="10" autocomplete="off" />
+                            <select name="moneda" id="moneda">
+                                <option value="PEN">S/</option>
+                                <option value="USD">$</option>
+                                <option value="USD">£</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="input_group">
-                        <label for="start_time">Total Horas</label>
-                        <input type="button" id="total_horas" class="btn btn-white" value="200 Horas">
+                        <label for="total_horas" data-section="main_form" data-value="total_hours">Total Horas</label>
+                        <input type="button" id="total_horas" value="200" placeholder="200">
                     </div>
                 </div>
 
                 <div class="form_row">
                     <div class="input_group">
-                        <label for="start_time">Monto Total</label>
-                        <input type="button" id="monto_total" class="btn btn-white" value="2000 PEN">
+                        <label for="monto_total" data-section="main_form" data-value="total_amount">Monto Total</label>
+                        <input type="button" id="monto_total" class="btn btn-white" value="2000">
                     </div>
                 </div>
 
                 <div class="form_row">
                     <div class="input_group">
-                        <label for="start_time">Resumen</label>
-                        <button class="print_button"  data-bs-toggle="modal" data-bs-target="#exampleModal">Imprimir</button>
+                        <label data-section="main_form" data-value="resume">Resumen</label>
+                        <button class="print_button"  data-bs-toggle="modal" data-bs-target="#resumenModal" data-section="main_form" data-value="resume_btn">Ver resumen</button>
                     </div>
                 </div>
             </div>
@@ -97,26 +130,34 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="resumenModal" tabindex="-1" aria-labelledby="resumenModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header text-start">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="my-2">
+                        <label for="nombreUsuario" data-section="resume_modal" data-value="fullname" >Nombre completo</label>
+                        <input type="text" id="nombreUsuario" class="form-control" autocomplete="off" autofocus>
+                    </div>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Fecha</th>
-                                    <th>Entrada</th>
-                                    <th>Salida</th>
-                                    <th>Descanso</th>
+                                    <th data-section="resume_modal" data-value="table_date">Fecha</th>
+                                    <th data-section="resume_modal" data-value="table_start">Entrada</th>
+                                    <th data-section="resume_modal" data-value="table_end">Salida</th>
+                                    <th data-section="resume_modal" data-value="table_break">Descanso</th>
                                 </tr>
                             </thead>
                             <tbody id="fechasSeleccionadasContainer"></tbody>
                         </table>
                     </div>
+
+                    <button class="btn btn-dark" id="btnDescargar" data-section="resume_modal" data-value="save_pdf">
+                        Imprimir
+                    </button>
                 </div>
             </div>
         </div>
@@ -129,8 +170,9 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <script src="assets/js/calculator.js"></script>
-
+    <script src="assets/js/language.js"></script>
 
 </body>
 

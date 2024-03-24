@@ -1,0 +1,26 @@
+{
+    "navbar" :{
+        "change_lang" : "Cambiar idioma"
+    },
+    "main_form" : {
+        "title" : "Calculadora de tiempo de trabajo",
+        "start_time" : "Ingreso",
+        "finish_time" : "Salida",
+        "break_time" : "Descanso",
+        "calendar" : "Calendario",
+        "price_hour" : "Precio/Hora",
+        "total_hours" : "Total Horas",
+        "total_amount" : "Monto total",
+        "resume" : "Resumen",
+        "resume_btn" : "Ver resumen"
+    },
+    "resume_modal" : {
+        "fullname" : "Nombre completo",
+        "table_date" : "Fecha",
+        "table_start" : "Entrada",
+        "table_end" : "Salida",
+        "table_break" : "Descanso",
+        "save_pdf" : "Guardar PDF"
+    }
+
+}
