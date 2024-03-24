@@ -38,9 +38,20 @@ body{
     justify-content: end;
     align-items: center;
     overflow: hidden;
-    
 }
 
+@media screen and (max-width: 1200px) {
+    .main_container{
+        padding-right: 80px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .main_container{
+        justify-content: center;
+        padding-right: 0;
+    }    
+}
 
 .calculator_card{
     background-color: rgba(255, 255, 255, 0.6);
