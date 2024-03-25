@@ -1,6 +1,5 @@
-*{
-    padding: 0;
-    margin: 0;
+:root{
+    --color-dark : #000;
 }
 
 body{
@@ -15,7 +14,7 @@ body{
 }
 
 .navbar{
-    height: 80px;
+    height: 60px;
 }
 
 .flags{
@@ -32,7 +31,7 @@ body{
 
 .main_container{
     max-width: 1200px;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 60px);
     margin: 0 auto;
     display: flex;
     justify-content: end;
@@ -102,24 +101,43 @@ body{
     padding: 7px;
     border-radius: 5px;
     border: none;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
+    width: 100%;
+    min-height: 38px;
 }
-.input_group input:hover, .input_group input:focus{
+.input_group input:hover{
     background-color: #FFFFFF;
+    outline: none;
     cursor: pointer;
 }
+
 .input_group input:active{
     background-color: #FFFFFF;
-    border: 1px solid white;
+    border: 1px solid var(--color-dark);
+}
+
+.input_group input:focus{
+    background-color: #FFFFFF;
+    outline: none;
+    cursor: pointer;
+    border: 1px solid var(--color-dark);
+}
+
+select:focus{
+    outline: none;
+}
+
+input.disabled:focus{
+    border: none;
+    cursor: default;
 }
 
 .print_button{
-    background-color: #000;
+    background-color: var(--color-dark);
     color: #fff;
-    font-size: 22px;
+    /* font-size: 22px; */
     padding: 7px;
-    border-radius: 5px;
-    /* border: 1px solid #000; */
+    border-radius: 6px;
 }
 
 .print_button:hover{
@@ -139,6 +157,13 @@ body{
 .precio_hora_container select{
     border-radius: 5px;
     border: none;
-    /* width: 40%; */
 }
 
+.form-control:focus{
+    border-color: 1px solid var(--color-dark);
+    box-shadow: none !important;
+}
+
+.btn-close:focus, .btn-close:active:focus, .btn-close.active:focus {
+    box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.25);
+}

@@ -4,8 +4,8 @@
     },
     "main_form" : {
         "title" : "Work time calculator",
-        "start_time" : "Start time",
-        "finish_time" : "End time",
+        "start_time" : "In",
+        "finish_time" : "Out",
         "break_time" : "Break",
         "calendar" : "Calendar",
         "price_hour" : "Price/Hour",
@@ -15,12 +15,11 @@
         "resume_btn" : "See resume"
     },
     "resume_modal" : {
-        "fullname" : "Full name",
+        "fullname" : "Type your name",
         "table_date" : "Date",
-        "table_start" : "Start time",
-        "table_end" : "End time",
+        "table_start" : "In",
+        "table_end" : "Out",
         "table_break" : "Break",
         "save_pdf" : "Save PDF"
     }
-
 }

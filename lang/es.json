@@ -15,7 +15,7 @@
         "resume_btn" : "Ver resumen"
     },
     "resume_modal" : {
-        "fullname" : "Nombre completo",
+        "fullname" : "Escribe tu nombre",
         "table_date" : "Fecha",
         "table_start" : "Entrada",
         "table_end" : "Salida",

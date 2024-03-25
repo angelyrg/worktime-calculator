@@ -1,5 +1,8 @@
+
+
 document.addEventListener('DOMContentLoaded', () => {
-    
+    setCurrentMonthYear();
+
     let fechasSeleccionadas = {};
     let entradaDefault = document.getElementById('horaEntrada').value;
     let salidaDefault = document.getElementById('horaSalida').value;
@@ -84,11 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const monedaSeleccionada = document.getElementById('moneda').value;
         const totalAPagar = totalHoras * pagoPorHora;
 
-        document.getElementById('total_horas').value = `${totalHoras.toFixed(2)} Horas`;
+        document.getElementById('total_horas').value = `${totalHoras.toFixed(2)}`;
         document.getElementById('monto_total').value = `${totalAPagar.toFixed(2)} ${monedaSeleccionada}`;
     }
-
-
 
     const btnDescargar = document.getElementById('btnDescargar');
     btnDescargar.addEventListener('click', () => descargarPDF(fechasSeleccionadas));
@@ -151,3 +152,18 @@ function descargarPDF(fechasSeleccionadas) {
 }
 
 
+function setCurrentMonthYear(){
+    const inputMesActual = document.getElementById('seleccionarFechas');
+    
+    const fechaActual = new Date();
+    const opciones = { month: 'long', year: 'numeric' };
+    const idiomaNavegador = navigator.language;
+
+    const mesYAnio = new Intl.DateTimeFormat(idiomaNavegador, opciones).format(fechaActual);
+    inputMesActual.value = mesYAnio;
+}
+
+
+document.getElementById('resumenModal').addEventListener('shown.bs.modal', function () {
+    document.getElementById('nombreUsuario').focus();
+});

@@ -1,64 +1,48 @@
 
+document.addEventListener('DOMContentLoaded', () => {
+    const preferredLanguage = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0];
+    const flagItems = document.querySelectorAll('.flag-item');
 
-// const flagsElement = document.getElementById("flags");
-const textsToChange = document.querySelectorAll("[data-section]");
+    changeLanguage(preferredLanguage);
 
-// flagsElement.addEventListener('click', (e)=>{
-//     let language = e.target.dataset.language || e.target.parentElement.dataset.language;
-//     if (language) {
-//         changeLanguage(language);
-//     }
-// })
+    // Añadir manejadores de evento para cada item del dropdown
+    flagItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevenir la navegación
+            const selectedLanguage = this.getAttribute('data-language');
+            changeLanguage(selectedLanguage);
+        });
+    });
+});
+
 
 
 const changeLanguage = async language => {
     localStorage.setItem('preferredLanguage', language);
 
-    const reqestJson = await fetch(`./lang/${language}.json`)
-    const texts = await reqestJson.json();
+    // Carga el archivo JSON del idioma seleccionado
+    const requestJson = await fetch(`./lang/${language}.json`);
+    const texts = await requestJson.json();
 
+    // Busca todos los elementos que necesitan ser actualizados
+    const textsToChange = document.querySelectorAll('[data-section][data-value]');
+
+    // Itera sobre los elementos y actualiza su contenido
     for (const textToChange of textsToChange) {
-        const section = textToChange.dataset.section;
-        const value = textToChange.dataset.value;
+        const section = textToChange.getAttribute('data-section');
+        const value = textToChange.getAttribute('data-value');
         textToChange.innerHTML = texts[section][value];   
     }
 
+    // Opcional: Actualizar el botón del dropdown para reflejar el idioma seleccionado
+    updateDropdownButton(language);
+};
+
+// Función adicional para actualizar el botón del dropdown con la bandera e idioma actual
+function updateDropdownButton(language) {
+    const dropdownButton = document.getElementById('dropdownMenuButton');
+    const selectedFlagItem = document.querySelector(`.flag-item[data-language="${language}"]`);
+    if (selectedFlagItem) {
+        dropdownButton.innerHTML = selectedFlagItem.innerHTML + ' <span class="caret"></span>';
+    }
 }
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     const savedLanguage = localStorage.getItem('preferredLanguage');
-//     const defaultLanguage = savedLanguage || navigator.language.split('-')[0];
-
-//     changeLanguage(defaultLanguage);
-// });
-
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const dropdownMenu = document.querySelector('#languageDropdown .dropdown-menu');
-
-   
-
-    dropdownMenu.addEventListener('click', (e) => {
-        // Previene la navegación si se hace clic en el enlace
-        e.preventDefault();
-
-        // Encuentra el elemento <a> más cercano en la jerarquía para obtener el idioma
-        const item = e.target.closest('.dropdown-item');
-        const language = item ? item.dataset.language : undefined;
-
-        if (language) {
-            changeLanguage(language);
-
-            // Actualiza el botón del dropdown para mostrar el idioma seleccionado
-            const dropdownButton = document.querySelector('#languageDropdown > button');
-            dropdownButton.innerHTML = item.innerHTML + ' <span class="caret"></span>';
-        }
-    });
-
-    // Carga el idioma guardado o el idioma del navegador
-    const savedLanguage = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0];
-    changeLanguage(savedLanguage);
-});
