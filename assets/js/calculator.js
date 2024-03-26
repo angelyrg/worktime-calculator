@@ -94,6 +94,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnDescargar = document.getElementById('btnDescargar');
     btnDescargar.addEventListener('click', () => descargarPDF(fechasSeleccionadas));
 
+
+    var inputsHora = document.querySelectorAll('input[type="time"]');
+    inputsHora.forEach(function(horaEntrada) {
+        horaEntrada.addEventListener('keydown', function(e) {
+            e.preventDefault();
+        });
+
+        // horaEntrada.addEventListener('click', function(e) {
+        //     // El comportamiento para abrir el selector de hora puede no ser necesario
+        //     // o no funcionar como se espera en todos los navegadores.
+        // });
+    });
     
 });
 
