@@ -6,7 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let fechasSeleccionadas = {};
     let entradaDefault = document.getElementById('horaEntrada').value;
     let salidaDefault = document.getElementById('horaSalida').value;
-    let descansoDefault = parseInt(document.getElementById('descanso').value);
+    let descansoInput = document.getElementById("descanso").value;
+    let descansoDefault = descansoInput === "" ? 0 : parseInt(descansoInput);
+    descansoDefault = descansoDefault || 0;
+
+    var totalHoras = 0;
+    multiplicarHorasYPrecio();
 
     document.getElementById('horaEntrada').addEventListener('change', function () {
         entradaDefault = this.value;
@@ -41,12 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 calcularHorasYTotal();
             },
             onReady: function(selectedDates, dateStr, instance) {
+                instance.calendarContainer.classList.add(
+                  "flatpickr-calendario"
+                );
                 const okButton = document.createElement("button");
                 okButton.innerHTML = `
                 <svg width="20" height="20" viewBox="0 0 32 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M29.75 2L10.5 24L2.25 15.75" stroke="black" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>`;
-                okButton.className = "border-0 px-3 py-2 rounded-3";
+                okButton.className = "border-0 px-3 py-2 rounded-3 w-100";
                 okButton.addEventListener("click", function() {
                     instance.close();
                 });
@@ -72,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function calcularHorasYTotal() {
-        let totalHoras = 0;
+        // let totalHoras = 0;
         Object.keys(fechasSeleccionadas).forEach(fecha => {
             const { entrada, salida, descanso } = fechasSeleccionadas[fecha];
             const horaEntrada = dayjs(`${fecha}T${entrada}`);
@@ -83,13 +91,29 @@ document.addEventListener('DOMContentLoaded', () => {
             // Actualizar fechasSeleccionadas con las horas trabajadas y descanso
             fechasSeleccionadas[fecha].horasTrabajadas = horasTrabajadas;
         });
-        const pagoPorHora = parseFloat(document.getElementById('precio_hora').value);
-        const monedaSeleccionada = document.getElementById('moneda').value;
-        const totalAPagar = totalHoras * pagoPorHora;
-
-        document.getElementById('total_horas').value = `${totalHoras.toFixed(2)}`;
-        document.getElementById('monto_total').value = `${totalAPagar.toFixed(2)} ${monedaSeleccionada}`;
+        multiplicarHorasYPrecio();
     }
+
+    function multiplicarHorasYPrecio() {
+      const pagoPorHora = parseFloat(
+        document.getElementById("precio_hora").value
+      );
+      const monedaSeleccionada = document.getElementById("moneda").value;
+      const totalAPagar = totalHoras * pagoPorHora;
+      document.getElementById("total_horas").value = `${totalHoras.toFixed(2)}`;
+      document.getElementById("monto_total").value = `${totalAPagar.toFixed(
+        2
+      )} ${monedaSeleccionada}`;
+    }
+
+    document
+      .getElementById("precio_hora")
+      .addEventListener("change", () => multiplicarHorasYPrecio());
+    
+    document
+      .getElementById("moneda")
+      .addEventListener("change", () => multiplicarHorasYPrecio());
+    
 
     const btnDescargar = document.getElementById('btnDescargar');
     btnDescargar.addEventListener('click', () => descargarPDF(fechasSeleccionadas));
@@ -113,8 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function descargarPDF(fechasSeleccionadas) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({
-      // Ajusta los márgenes del documento
-      // Los valores aquí son los predeterminados, ajusta según necesites
       margins: { top: 10, bottom: 10, left: 10, right: 10 },
     });
 

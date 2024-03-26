@@ -123,6 +123,10 @@ body{
     border: 1px solid var(--color-dark);
 }
 
+button{
+    min-height: 38px;
+}
+
 select:focus{
     outline: none;
 }
@@ -166,4 +170,22 @@ input.disabled:focus{
 
 .btn-close:focus, .btn-close:active:focus, .btn-close.active:focus {
     box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.25);
+}
+
+
+.flatpickr-calendario {
+    max-width: 300px;
+}
+
+/* Estilos para pantallas pequeñas (por ejemplo, menos de 576px) */
+@media (max-width: 575.98px) {
+    .flatpickr-calendario {
+        max-width: 100%; /* Hace que el calendario ocupe el ancho completo de la pantalla */
+        font-size: 12px; /* Reduce el tamaño de la fuente */
+        /* Ajusta otros estilos según necesites */
+    }
+    .flatpickr-calendario .flatpickr-month {
+        /* Ajustes específicos para los elementos internos del calendario en pantallas pequeñas */
+    }
+    /* Continúa ajustando otros elementos internos del calendario según sea necesario */
 }

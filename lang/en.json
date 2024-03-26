@@ -7,7 +7,7 @@
         "start_time" : "In",
         "finish_time" : "Out",
         "break_time" : "Break",
-        "calendar" : "Calendar",
+        "calendar" : "Date",
         "price_hour" : "Price/Hour",
         "total_hours" : "Total Hours",
         "total_amount" : "Total Amount",
