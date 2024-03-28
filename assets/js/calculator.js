@@ -1,39 +1,33 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
     setCurrentMonthYear();
 
-    let fechasSeleccionadas = {};
-    let entradaDefault = document.getElementById('horaEntrada').value;
-    let salidaDefault = document.getElementById('horaSalida').value;
-    let descansoInput = document.getElementById("descanso").value;
-    let descansoDefault = descansoInput === "" ? 0 : parseInt(descansoInput);
-    descansoDefault = descansoDefault || 0;
+    var fechasSeleccionadas = {};
+    var entradaDefault = document.getElementById('horaEntrada').value;
+    var salidaDefault = document.getElementById('horaSalida').value;
+    var descansoDefault = parseInt(document.getElementById("descanso").value) || 0;
 
-    var totalHoras = 0;
-    multiplicarHorasYPrecio();
+    document.querySelectorAll('#horaEntrada, #horaSalida, #descanso, #precio_hora, #moneda').forEach(elem => {
+        elem.addEventListener('change', ()=>{
 
-    document.getElementById('horaEntrada').addEventListener('change', function () {
-        entradaDefault = this.value;
-    });
+            console.log("Cambio");
+            actualizarCalculos();
 
-    document.getElementById('horaSalida').addEventListener('change', function () {
-        salidaDefault = this.value;
-    });
-
-    document.getElementById('descanso').addEventListener('change', function () {
-        descansoDefault = parseInt(this.value);
+        });
     });
 
     document.getElementById('seleccionarFechas').addEventListener('click', () => {
+        actualizarFechasSeleccionadas();        
+    });
+
+    function actualizarFechasSeleccionadas(){
         flatpickr("#calendarioContainer", {
             mode: "multiple",
             dateFormat: "Y-m-d",
             enableTime: false,
             defaultDate: Object.keys(fechasSeleccionadas),
-            onClose: function (selectedDates) {
+            onClose: function(selectedDates) {
                 const fechasActualizadas = {};
-                selectedDates.forEach((date) => {
+                selectedDates.forEach(date => {
                     const dateString = date.toISOString().substring(0, 10);
                     fechasActualizadas[dateString] = fechasSeleccionadas[dateString] || {
                         entrada: entradaDefault,
@@ -43,26 +37,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 fechasSeleccionadas = fechasActualizadas;
                 actualizarUIFechas();
-                calcularHorasYTotal();
+                actualizarCalculos();
             },
             onReady: function(selectedDates, dateStr, instance) {
-                instance.calendarContainer.classList.add(
-                  "flatpickr-calendario"
-                );
+                instance.calendarContainer.classList.add("flatpickr-calendario");
                 const okButton = document.createElement("button");
-                okButton.innerHTML = `
-                <svg width="20" height="20" viewBox="0 0 32 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M29.75 2L10.5 24L2.25 15.75" stroke="black" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>`;
+                okButton.textContent = "OK";
                 okButton.className = "border-0 px-3 py-2 rounded-3 w-100";
-                okButton.addEventListener("click", function() {
+                okButton.addEventListener("click", () => {
                     instance.close();
                 });
-                
-                instance.calendarContainer.appendChild(okButton);
+
+                instance.calendarContainer.prepend(okButton);
             },
         }).open();
-    });
+    }
 
     function actualizarUIFechas() {
         const container = document.getElementById('fechasSeleccionadasContainer');
@@ -79,59 +68,65 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function actualizarCalculos() {
+        console.log("actualizarCalculos");
+
+        entradaDefault = document.getElementById('horaEntrada').value;
+        salidaDefault = document.getElementById('horaSalida').value;
+        descansoDefault = parseInt(document.getElementById("descanso").value) || 0;
+
+        // Luego, recalcular el total de horas y actualizar el total a pagar
+        calcularHorasYTotal();
+    }
+
     function calcularHorasYTotal() {
-        // let totalHoras = 0;
+        let totalHoras = 0;
         Object.keys(fechasSeleccionadas).forEach(fecha => {
-            const { entrada, salida, descanso } = fechasSeleccionadas[fecha];
+            // Actualiza las horas de entrada, salida y descanso basado en los valores actuales
+            const entrada = entradaDefault;
+            const salida = salidaDefault;
+            const descanso = parseInt(document.getElementById("descanso").value) || 0;
+            
+            // Realiza los cálculos de horas trabajadas para cada fecha seleccionada
             const horaEntrada = dayjs(`${fecha}T${entrada}`);
             const horaSalida = dayjs(`${fecha}T${salida}`);
             const horasTrabajadas = horaSalida.diff(horaEntrada, 'hour', true) - (descanso / 60);
+    
+            // Acumula las horas trabajadas en el total
             totalHoras += horasTrabajadas;
-
-            // Actualizar fechasSeleccionadas con las horas trabajadas y descanso
-            fechasSeleccionadas[fecha].horasTrabajadas = horasTrabajadas;
+    
+            // Actualiza el registro actual con las nuevas horas trabajadas
+            fechasSeleccionadas[fecha] = { ...fechasSeleccionadas[fecha], horasTrabajadas };
         });
+    
+        // Actualiza el total de horas trabajadas en la interfaz de usuario
+        document.getElementById("total_horas").value = totalHoras.toFixed(2);
+    
+        // Dado que el total de horas ha cambiado, es posible que también necesites actualizar el total a pagar
         multiplicarHorasYPrecio();
     }
 
     function multiplicarHorasYPrecio() {
-      const pagoPorHora = parseFloat(
-        document.getElementById("precio_hora").value
-      );
-      const monedaSeleccionada = document.getElementById("moneda").value;
-      const totalAPagar = totalHoras * pagoPorHora;
-      document.getElementById("total_horas").value = `${totalHoras.toFixed(2)}`;
-      document.getElementById("monto_total").value = `${totalAPagar.toFixed(
-        2
-      )} ${monedaSeleccionada}`;
+        const pagoPorHora = parseFloat(document.getElementById("precio_hora").value);
+        const monedaSeleccionada = document.getElementById("moneda").value;
+        const totalHoras = parseFloat(document.getElementById("total_horas").value);
+        const totalAPagar = totalHoras * pagoPorHora;
+        document.getElementById("monto_total").value = `${totalAPagar.toFixed(2)} ${monedaSeleccionada}`;
     }
-
-    document
-      .getElementById("precio_hora")
-      .addEventListener("change", () => multiplicarHorasYPrecio());
-    
-    document
-      .getElementById("moneda")
-      .addEventListener("change", () => multiplicarHorasYPrecio());
-    
 
     const btnDescargar = document.getElementById('btnDescargar');
     btnDescargar.addEventListener('click', () => descargarPDF(fechasSeleccionadas));
-
-
-    var inputsHora = document.querySelectorAll('input[type="time"]');
-    inputsHora.forEach(function(horaEntrada) {
-        horaEntrada.addEventListener('keydown', function(e) {
-            e.preventDefault();
-        });
-
-        // horaEntrada.addEventListener('click', function(e) {
-        //     // El comportamiento para abrir el selector de hora puede no ser necesario
-        //     // o no funcionar como se espera en todos los navegadores.
-        // });
-    });
-    
 });
+
+function setCurrentMonthYear() {
+    const inputMesActual = document.getElementById('seleccionarFechas');
+    const fechaActual = new Date();
+    const opciones = { month: 'long', year: 'numeric' };
+    const idiomaNavegador = navigator.language;
+    const mesYAnio = new Intl.DateTimeFormat(idiomaNavegador, opciones).format(fechaActual);
+    inputMesActual.value = mesYAnio;
+}
+
 
 
 function descargarPDF(fechasSeleccionadas) {
