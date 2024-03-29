@@ -140,7 +140,7 @@ function descargarPDF(fechasSeleccionadas) {
 
 
     const img = new Image();
-    img.src = './../assets/img/logotipo.png';
+    img.src = './assets/img/logotipo.png';
     img.onload = () => {
 
         const imgWidthInPdf = 50;
