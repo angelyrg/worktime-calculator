@@ -139,7 +139,8 @@ function descargarPDF(fechasSeleccionadas) {
 
     const pageWidth = doc.internal.pageSize.getWidth() - marginLeft - marginRight;
 
-    const imageUrl = './../assets/img/logotipo.png';
+    // const imageUrl = './../assets/img/logotipo.png';
+    const imageUrl = 'https://raw.githubusercontent.com/angelyrg/worktime-calculator/main/assets/img/logotipo.png';
     const imgWidthInPdf = 50;
     const imgHeightInPdf = (imgWidthInPdf / 592) * 130;
     const xPosition = marginLeft + (pageWidth / 2) - (imgWidthInPdf / 2);
