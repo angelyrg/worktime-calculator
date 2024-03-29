@@ -136,74 +136,80 @@ function descargarPDF(fechasSeleccionadas) {
     const marginRight = 40;
     const marginTop = 20;
     const marginBottom = 20;
-
     const pageWidth = doc.internal.pageSize.getWidth() - marginLeft - marginRight;
 
-    // const imageUrl = './../assets/img/logotipo.png';
-    const imageUrl = 'https://raw.githubusercontent.com/angelyrg/worktime-calculator/main/assets/img/logotipo.png';
-    const imgWidthInPdf = 50;
-    const imgHeightInPdf = (imgWidthInPdf / 592) * 130;
-    const xPosition = marginLeft + (pageWidth / 2) - (imgWidthInPdf / 2);
-    doc.addImage(imageUrl, 'PNG', xPosition, marginTop, imgWidthInPdf, imgHeightInPdf);
 
-    let yPosition = marginTop + imgHeightInPdf + 5;
+    const img = new Image();
+    img.src = './../assets/img/logotipo.png';
+    img.onload = () => {
 
-    // Añade "www.tu-time.com" 
-    const fontSize = 11;
-    doc.setFontSize(fontSize);
-    const sitioWeb = "www.tu-time.com";
-    const sitioWebWidth = doc.getTextWidth(sitioWeb);
-    doc.text(sitioWeb, marginLeft + (pageWidth / 2) - (sitioWebWidth / 2), yPosition);
-    yPosition += 8;
-
-    // Añade el nombre del usuario centrado y subrayado
-    const nombreUsuario = `${document.getElementById('nombreUsuario').value}`;
-    const nombreUsuarioWidth = doc.getTextWidth(nombreUsuario);
-    doc.text(nombreUsuario, marginLeft + (pageWidth / 2) - (nombreUsuarioWidth / 2), yPosition);
-
-    doc.setDrawColor(150, 150, 150);
-    doc.setLineWidth(0.1);
-    doc.line(marginLeft + (pageWidth / 2) - (nombreUsuarioWidth / 2) - 5, yPosition + 1, marginLeft + (pageWidth / 2) + (nombreUsuarioWidth / 2) + 5, yPosition + 1);
-
-    yPosition += 15; 
+        const imgWidthInPdf = 50;
+        const imgHeightInPdf = (imgWidthInPdf / 592) * 130;
+        const xPosition = marginLeft + (pageWidth / 2) - (imgWidthInPdf / 2);
+        doc.addImage(img, 'PNG', xPosition, marginTop, imgWidthInPdf, imgHeightInPdf);
+        
+        
+        let yPosition = marginTop + imgHeightInPdf + 5;
     
-
-    doc.setFontSize(12);
-    doc.text("Date", marginLeft, yPosition);
-    doc.text("In", marginLeft + (pageWidth / 4), yPosition);
-    doc.text("Out", marginLeft + (pageWidth / 2), yPosition);
-    doc.text("Break", marginLeft + (3 * pageWidth / 4), yPosition);
-
-    yPosition += 7;
-
-    Object.keys(fechasSeleccionadas).forEach(fecha => {
-        if (yPosition > doc.internal.pageSize.getHeight() - marginBottom) {
+        // Añade "www.tu-time.com" 
+        const fontSize = 11;
+        doc.setFontSize(fontSize);
+        const sitioWeb = "www.tu-time.com";
+        const sitioWebWidth = doc.getTextWidth(sitioWeb);
+        doc.text(sitioWeb, marginLeft + (pageWidth / 2) - (sitioWebWidth / 2), yPosition);
+        yPosition += 8;
+    
+        // Añade el nombre del usuario centrado y subrayado
+        const nombreUsuario = `${document.getElementById('nombreUsuario').value}`;
+        const nombreUsuarioWidth = doc.getTextWidth(nombreUsuario);
+        doc.text(nombreUsuario, marginLeft + (pageWidth / 2) - (nombreUsuarioWidth / 2), yPosition);
+    
+        doc.setDrawColor(150, 150, 150);
+        doc.setLineWidth(0.1);
+        doc.line(marginLeft + (pageWidth / 2) - (nombreUsuarioWidth / 2) - 5, yPosition + 1, marginLeft + (pageWidth / 2) + (nombreUsuarioWidth / 2) + 5, yPosition + 1);
+    
+        yPosition += 15; 
+        
+    
+        doc.setFontSize(12);
+        doc.text("Date", marginLeft, yPosition);
+        doc.text("In", marginLeft + (pageWidth / 4), yPosition);
+        doc.text("Out", marginLeft + (pageWidth / 2), yPosition);
+        doc.text("Break", marginLeft + (3 * pageWidth / 4), yPosition);
+    
+        yPosition += 7;
+    
+        Object.keys(fechasSeleccionadas).forEach(fecha => {
+            if (yPosition > doc.internal.pageSize.getHeight() - marginBottom) {
+                doc.addPage();
+                yPosition = marginTop;
+            }
+            const { entrada, salida, descanso } = fechasSeleccionadas[fecha];
+            doc.text(fecha, marginLeft, yPosition);
+            doc.text(entrada, marginLeft + (pageWidth / 4), yPosition);
+            doc.text(salida, marginLeft + (pageWidth / 2), yPosition);
+            doc.text(`${descanso} min`, marginLeft + (3 * pageWidth / 4), yPosition);
+            yPosition += 7;
+        });
+    
+        // Resumen al final
+        if (yPosition + 30 > doc.internal.pageSize.getHeight() - marginBottom) { // Asegura espacio para el resumen
             doc.addPage();
             yPosition = marginTop;
         }
-        const { entrada, salida, descanso } = fechasSeleccionadas[fecha];
-        doc.text(fecha, marginLeft, yPosition);
-        doc.text(entrada, marginLeft + (pageWidth / 4), yPosition);
-        doc.text(salida, marginLeft + (pageWidth / 2), yPosition);
-        doc.text(`${descanso} min`, marginLeft + (3 * pageWidth / 4), yPosition);
-        yPosition += 7;
-    });
-
-    // Resumen al final
-    if (yPosition + 30 > doc.internal.pageSize.getHeight() - marginBottom) { // Asegura espacio para el resumen
-        doc.addPage();
-        yPosition = marginTop;
-    }
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-    doc.text("Resume", marginLeft, yPosition += 10);
-    doc.setFont("helvetica", "normal");
-    doc.text(`Total hours: ${document.getElementById('total_horas').value}`, marginLeft, yPosition += 7);
-    doc.text(`Price per hour: ${document.getElementById('precio_hora').value} ${document.getElementById('moneda').value}`, marginLeft, yPosition += 6);
-    doc.text(`Total amount: ${document.getElementById('monto_total').value}`, marginLeft, yPosition += 6);
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold");
+        doc.text("Resume", marginLeft, yPosition += 10);
+        doc.setFont("helvetica", "normal");
+        doc.text(`Total hours: ${document.getElementById('total_horas').value}`, marginLeft, yPosition += 7);
+        doc.text(`Price per hour: ${document.getElementById('precio_hora').value} ${document.getElementById('moneda').value}`, marginLeft, yPosition += 6);
+        doc.text(`Total amount: ${document.getElementById('monto_total').value}`, marginLeft, yPosition += 6);
+        
     
+        doc.save('resume.pdf');
+    };
 
-    doc.save('resume.pdf');
+
 }
 
 
