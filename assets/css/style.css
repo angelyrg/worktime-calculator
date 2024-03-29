@@ -102,7 +102,7 @@ body{
     border-radius: 5px;
     border: none;
     background-color: #ffffff;
-    width: 100%;
+    width: 100% !important;
     min-height: 38px;
 }
 .input_group input:hover{
@@ -150,17 +150,18 @@ input.disabled:focus{
 }
 
 .precio_hora_container{
-    width: 100%;
+    width: 100% !important;
     display: flex;
     gap: 5px;
 }
 
 .precio_hora_container input{
-    width: 60%;
+    width: 65%;
 }
 .precio_hora_container select{
     border-radius: 5px;
     border: none;
+    width: 35%;
 }
 
 .form-control:focus{
