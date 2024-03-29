@@ -127,58 +127,86 @@ function setCurrentMonthYear() {
     inputMesActual.value = mesYAnio;
 }
 
-
-
 function descargarPDF(fechasSeleccionadas) {
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({
-      margins: { top: 10, bottom: 10, left: 10, right: 10 },
-    });
+    const doc = new jsPDF();
 
-    let yPosition = 20; // Inicia un poco más abajo para dar espacio al encabezado
-    const fontSize = 10; // Define un tamaño de fuente uniforme para todo el texto
-    doc.setFontSize(fontSize); // Aplica el tamaño de fuente
+    // Definir márgenes
+    const marginLeft = 40;
+    const marginRight = 40;
+    const marginTop = 20;
+    const marginBottom = 20;
 
-    // Define un espaciado vertical menor para que los textos estén más "pegados"
-    const lineSpacing = 5;
+    const pageWidth = doc.internal.pageSize.getWidth() - marginLeft - marginRight;
 
-    // Encabezado
-    doc.text(`Nombre: ${document.getElementById('nombreUsuario').value}`, 10, yPosition);
-    yPosition += lineSpacing; // Usa el espaciado vertical personalizado
-    doc.text(`Pago por hora: ${document.getElementById('precio_hora').value} ${document.getElementById('moneda').value}`, 10, yPosition);
-    yPosition += lineSpacing + 5; // Agrega un poco más de espacio antes de la tabla
+    const imageUrl = '../assets/img/logotipo.png';
+    const imgWidthInPdf = 50;
+    const imgHeightInPdf = (imgWidthInPdf / 592) * 130;
+    const xPosition = marginLeft + (pageWidth / 2) - (imgWidthInPdf / 2);
+    doc.addImage(imageUrl, 'PNG', xPosition, marginTop, imgWidthInPdf, imgHeightInPdf);
 
-    // Títulos de columnas para la tabla
-    doc.text("Fecha", 10, yPosition);
-    doc.text("Entrada", 40, yPosition);
-    doc.text("Salida", 70, yPosition);
-    doc.text("Descanso", 100, yPosition);
-    yPosition += lineSpacing;
+    let yPosition = marginTop + imgHeightInPdf + 5;
 
-    // Iterar sobre fechas seleccionadas y añadir a la tabla
+    // Añade "www.tu-time.com" 
+    const fontSize = 11;
+    doc.setFontSize(fontSize);
+    const sitioWeb = "www.tu-time.com";
+    const sitioWebWidth = doc.getTextWidth(sitioWeb);
+    doc.text(sitioWeb, marginLeft + (pageWidth / 2) - (sitioWebWidth / 2), yPosition);
+    yPosition += 8;
+
+    // Añade el nombre del usuario centrado y subrayado
+    const nombreUsuario = `${document.getElementById('nombreUsuario').value}`;
+    const nombreUsuarioWidth = doc.getTextWidth(nombreUsuario);
+    doc.text(nombreUsuario, marginLeft + (pageWidth / 2) - (nombreUsuarioWidth / 2), yPosition);
+
+    doc.setDrawColor(150, 150, 150);
+    doc.setLineWidth(0.1);
+    doc.line(marginLeft + (pageWidth / 2) - (nombreUsuarioWidth / 2) - 5, yPosition + 1, marginLeft + (pageWidth / 2) + (nombreUsuarioWidth / 2) + 5, yPosition + 1);
+
+    yPosition += 15; 
+    
+
+    doc.setFontSize(12);
+    doc.text("Date", marginLeft, yPosition);
+    doc.text("In", marginLeft + (pageWidth / 4), yPosition);
+    doc.text("Out", marginLeft + (pageWidth / 2), yPosition);
+    doc.text("Break", marginLeft + (3 * pageWidth / 4), yPosition);
+
+    yPosition += 7;
+
     Object.keys(fechasSeleccionadas).forEach(fecha => {
-        const { entrada, salida, descanso } = fechasSeleccionadas[fecha];
-        doc.text(fecha, 10, yPosition);
-        doc.text(entrada, 40, yPosition);
-        doc.text(salida, 70, yPosition);
-        doc.text(`${descanso} min`, 100, yPosition);
-        yPosition += lineSpacing;
-
-        // Asegurar que no se desborde la página, añadiendo una nueva si es necesario
-        if (yPosition > 280) {
+        if (yPosition > doc.internal.pageSize.getHeight() - marginBottom) {
             doc.addPage();
-            yPosition = 10;
+            yPosition = marginTop;
         }
+        const { entrada, salida, descanso } = fechasSeleccionadas[fecha];
+        doc.text(fecha, marginLeft, yPosition);
+        doc.text(entrada, marginLeft + (pageWidth / 4), yPosition);
+        doc.text(salida, marginLeft + (pageWidth / 2), yPosition);
+        doc.text(`${descanso} min`, marginLeft + (3 * pageWidth / 4), yPosition);
+        yPosition += 7;
     });
 
-    // Resumen
-    yPosition += 5; // Agrega un poco más de espacio antes del resumen
-    doc.text(`Total horas: ${document.getElementById('total_horas').value}`, 10, yPosition);
-    yPosition += lineSpacing;
-    doc.text(`Monto total: ${document.getElementById('monto_total').value}`, 10, yPosition);
+    // Resumen al final
+    if (yPosition + 30 > doc.internal.pageSize.getHeight() - marginBottom) { // Asegura espacio para el resumen
+        doc.addPage();
+        yPosition = marginTop;
+    }
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("Resume", marginLeft, yPosition += 10);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Total hours: ${document.getElementById('total_horas').value}`, marginLeft, yPosition += 7);
+    doc.text(`Price per hour: ${document.getElementById('precio_hora').value} ${document.getElementById('moneda').value}`, marginLeft, yPosition += 6);
+    doc.text(`Total amount: ${document.getElementById('monto_total').value}`, marginLeft, yPosition += 6);
+    
 
-    doc.save('resumen-sueldo.pdf');
+    doc.save('resume.pdf');
 }
+
+
+
 
 
 function setCurrentMonthYear(){
