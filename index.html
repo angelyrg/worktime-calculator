@@ -49,7 +49,7 @@
         <div class="calculator_card">
             <div class="card_header">
                 <h1 data-section="main_form" data-value="title">Calculadora de tiempo de trabajo</h1>
-                <span>
+                <span class="btn border-0" data-bs-toggle="modal" data-bs-target="#videoModal">
                     <svg width="55" height="56" viewBox="0 0 55 56" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M47.8194 28.1202C47.8194 16.8245 38.655 7.66016 27.3594 7.66016C16.0638 7.66016 6.89941 16.8245 6.89941 28.1202C6.89941 39.4158 16.0638 48.5802 27.3594 48.5802C38.655 48.5802 47.8194 39.4158 47.8194 28.1202Z"
@@ -58,8 +58,7 @@
                             d="M23.1312 36.4785L35.3273 29.1108C35.4973 29.0072 35.6378 28.8616 35.7353 28.6881C35.8328 28.5145 35.884 28.3188 35.884 28.1197C35.884 27.9207 35.8328 27.7249 35.7353 27.5514C35.6378 27.3778 35.4973 27.2323 35.3273 27.1287L23.1312 19.761C22.9564 19.6562 22.7569 19.5999 22.5531 19.5977C22.3493 19.5955 22.1486 19.6476 21.9716 19.7486C21.7946 19.8496 21.6477 19.9958 21.5458 20.1723C21.444 20.3489 21.3909 20.5493 21.3921 20.7531V35.4864C21.3909 35.6902 21.444 35.8906 21.5458 36.0671C21.6477 36.2436 21.7946 36.3899 21.9716 36.4909C22.1486 36.5918 22.3493 36.6439 22.5531 36.6417C22.7569 36.6396 22.9564 36.5832 23.1312 36.4785Z"
                             fill="black" />
                     </svg>
-                </span>
-
+                </span>                
             </div>
             <div class="card_body">
                 <div class="form_row">
@@ -69,7 +68,7 @@
                     </div>
                     <div class="input_group">
                         <label for="horaSalida" data-section="main_form" data-value="finish_time">Salida</label>
-                        <input type="time" id="horaSalida" value="11:30">
+                        <input type="time" id="horaSalida" value="11:00">
                     </div>
                     <div class="input_group">
                         <label for="descanso" data-section="main_form" data-value="break_time">Descanso</label>
@@ -123,7 +122,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="resumenModal" tabindex="-1" aria-labelledby="resumenModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header text-start">
                     <button type="button" class="btn-close p-2 rounded-3" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -155,16 +154,34 @@
         </div>
     </div>
 
-
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tutorial</h1>
+                    <button type="button" class="btn-close border-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div id="player" class="w-100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+
+    <!-- API de YouTube IFrame Player -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script src="assets/js/calculator.js"></script>
     <script src="assets/js/language.js"></script>
+    <script src="assets/js/video.js"></script>
 
 </body>
 
