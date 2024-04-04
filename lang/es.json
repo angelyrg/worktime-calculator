@@ -21,6 +21,16 @@
         "table_end" : "Salida",
         "table_break" : "Descanso",
         "save_pdf" : "Guardar PDF"
-    }
-
+    },
+    "pdf" : {
+        "user": "User Name",
+        "date": "Date",
+        "in": "In",
+        "out": "Out",
+        "break": "Break",
+        "resume": "Resume",
+        "total_hours": "Total Hours",
+        "price_per_hour": "Price per Hour",
+        "total_amount": "Total Amount"
+      }
 }

@@ -125,7 +125,7 @@ function calcularTotal(dates) {
     const horas = Math.floor(totalHorasResumen); // Horas completas
     const minutos = Math.round((totalHorasResumen - horas) * 60); // Minutos restantes
 
-    // Formatear a Horas::Minutos
+    // Formatear a Horas:Minutos
     const totalHorasFormateado = `${horas}:${minutos
         .toString()
         .padStart(2, "0")}`;
@@ -149,6 +149,36 @@ function setCurrentMonthYear() {
 }
 
 function descargarPDF(fechasSeleccionadas) {
+
+    const preferredLanguage = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0];
+    const idiomas = {
+        es: {
+          user: "Nombre del Usuario",
+          date: "Fecha",
+          in: "Entrada",
+          out: "Salida",
+          break: "Descanso",
+          resume: "Resumen",
+          total_hours: "Horas Totales",
+          price_per_hour: "Precio por Hora",
+          total_amount: "Monto Total"
+        },
+        en: {
+          user: "User Name",
+          date: "Date",
+          in: "In",
+          out: "Out",
+          break: "Break",
+          resume: "Resume",
+          total_hours: "Total Hours",
+          price_per_hour: "Price per Hour",
+          total_amount: "Total Amount"
+        }
+      };
+    
+    const traducciones = idiomas[preferredLanguage];
+
+
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
@@ -209,10 +239,10 @@ function descargarPDF(fechasSeleccionadas) {
     yPosition += 15;
 
     doc.setFontSize(12);
-    doc.text("Date", marginLeft, yPosition);
-    doc.text("In", marginLeft + pageWidth / 4, yPosition);
-    doc.text("Out", marginLeft + pageWidth / 2, yPosition);
-    doc.text("Break", marginLeft + (3 * pageWidth) / 4, yPosition);
+    doc.text(traducciones.date, marginLeft, yPosition);
+    doc.text(traducciones.in, marginLeft + pageWidth / 4, yPosition);
+    doc.text(traducciones.out, marginLeft + pageWidth / 2, yPosition);
+    doc.text(traducciones.break, marginLeft + (3 * pageWidth) / 4, yPosition);
 
     yPosition += 7;
 
@@ -225,7 +255,7 @@ function descargarPDF(fechasSeleccionadas) {
       doc.text(fecha, marginLeft, yPosition);
       doc.text(entrada, marginLeft + pageWidth / 4, yPosition);
       doc.text(salida, marginLeft + pageWidth / 2, yPosition);
-      doc.text(`${descanso} min`, marginLeft + (3 * pageWidth) / 4, yPosition);
+      doc.text(`${descanso} mins`, marginLeft + (3 * pageWidth) / 4, yPosition);
       yPosition += 7;
     });
 
@@ -237,22 +267,22 @@ function descargarPDF(fechasSeleccionadas) {
     }
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
-    doc.text("Resume", marginLeft, (yPosition += 10));
+    doc.text(traducciones.resume, marginLeft, (yPosition += 10));
     doc.setFont("helvetica", "normal");
     doc.text(
-      `Total hours: ${document.getElementById("total_horas").value}`,
+      `${traducciones.total_hours}: ${document.getElementById("total_horas").value}`,
       marginLeft,
       (yPosition += 7)
     );
     doc.text(
-      `Price per hour: ${document.getElementById("precio_hora").value} ${
+      `${traducciones.price_per_hour}: ${document.getElementById("precio_hora").value} ${
         document.getElementById("moneda").value
       }`,
       marginLeft,
       (yPosition += 6)
     );
     doc.text(
-      `Total amount: ${document.getElementById("monto_total").value}`,
+      `${traducciones.total_amount}: ${document.getElementById("monto_total").value}`,
       marginLeft,
       (yPosition += 6)
     );

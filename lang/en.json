@@ -21,5 +21,16 @@
         "table_end" : "Out",
         "table_break" : "Break",
         "save_pdf" : "Save PDF"
-    }
+    },
+    "pdf" : {
+        "user": "Nombre del Usuario",
+        "date": "Fecha",
+        "in": "Entrada",
+        "out": "Salida",
+        "break": "Descanso",
+        "resume": "Resumen",
+        "total_hours": "Horas Totales",
+        "price_per_hour": "Precio por Hora",
+        "total_amount": "Monto Total"
+      }
 }
