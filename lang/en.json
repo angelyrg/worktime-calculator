@@ -15,12 +15,15 @@
         "resume_btn" : "See resume"
     },
     "resume_modal" : {
-        "fullname" : "Type your name",
+        "modal_title": "Summary",
+        "modal_title_download": "Download PDF",
+        "fullname" : "Type your name to download",
         "table_date" : "Date",
         "table_start" : "In",
         "table_end" : "Out",
         "table_break" : "Break",
-        "save_pdf" : "Save PDF"
+        "btn_continue": "Continue",
+        "btn_download": "Download"
     },
     "pdf" : {
         "user": "Nombre del Usuario",

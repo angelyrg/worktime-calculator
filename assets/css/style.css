@@ -105,6 +105,7 @@ body{
     width: 100%;
     min-height: 38px;
 }
+
 .input_group input:hover{
     background-color: #FFFFFF;
     outline: none;
@@ -122,6 +123,19 @@ body{
     cursor: pointer;
     border: 1px solid var(--color-dark);
 }
+
+#moneda{
+    padding: 0 10px;
+    color: #000;
+}
+
+/* Necesary for Iphone */
+input, select{
+    -webkit-appearance: none;
+    -webkit-text-fill-color: #000000;
+    opacity: 1;
+}
+
 
 button{
     min-height: 38px;

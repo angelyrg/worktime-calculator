@@ -291,6 +291,6 @@ function descargarPDF(fechasSeleccionadas) {
   };
 }
 
-document.getElementById("resumenModal").addEventListener("shown.bs.modal", function () {
+document.getElementById("nameModal").addEventListener("shown.bs.modal", function () {
     document.getElementById("nombreUsuario").focus();
 });

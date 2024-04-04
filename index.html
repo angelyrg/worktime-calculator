@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
     <link rel="shortcut icon" href="assets/img/ico.svg" type="image/x-icon">
     <title>Tu time</title>
 
@@ -64,15 +65,15 @@
                 <div class="form_row">
                     <div class="input_group">
                         <label for="horaEntrada" data-section="main_form" data-value="start_time">Ingreso</label>
-                        <input type="time" id="horaEntrada" value="10:00" style="width:100%; background-color:#fff; min-height:38px;"/>
+                        <input type="time" id="horaEntrada" value="10:00" />
                     </div>
                     <div class="input_group">
                         <label for="horaSalida" data-section="main_form" data-value="finish_time">Salida</label>
-                        <input type="time" id="horaSalida" value="11:00" style="width:100%; background-color:#fff; min-height:38px;"/>
+                        <input type="time" id="horaSalida" value="11:00" />
                     </div>
                     <div class="input_group">
                         <label for="descanso" data-section="main_form" data-value="break_time">Descanso</label>
-                        <input type="number" id="descanso" value="" placeholder="Mins"/>
+                        <input type="number" id="descanso" value="" placeholder="Mins" pattern="[0-9]*" autocomplete="off"/>
                     </div>
                 </div>
 
@@ -89,7 +90,7 @@
                     <div class="input_group">
                         <label for="precio_hora" data-section="main_form" data-value="price_hour">Precio/Hora</label>
                         <div class="precio_hora_container ">
-                            <input type="number" id="precio_hora" value="10" min="1" step="any" autocomplete="off" />
+                            <input type="number" id="precio_hora" value="10" min="1" step="any" inputmode="decimal" autocomplete="off" />
                             <select name="moneda" id="moneda">
                                 <option value="£">£</option>
                                 <option value="€">€</option>
@@ -113,25 +114,22 @@
                 <div class="form_row">
                     <div class="input_group">
                         <label data-section="main_form" data-value="resume">Resumen</label>
-                        <button class="print_button"  data-bs-toggle="modal" data-bs-target="#resumenModal" data-section="main_form" data-value="resume_btn">Ver resumen</button>
+                        <button class="print_button border-0"  data-bs-toggle="modal" data-bs-target="#resumenModal" data-section="main_form" data-value="resume_btn">Ver resumen</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Resume -->
     <div class="modal fade" id="resumenModal" tabindex="-1" aria-labelledby="resumenModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <div class="modal-header text-start">
+                <div class="modal-header">
+                    <h5 class="modal-title" data-section="resume_modal" data-value="modal_title">Resumen</h5>
                     <button type="button" class="btn-close p-2 rounded-3" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-2">
-                        <label for="nombreUsuario" data-section="resume_modal" data-value="fullname" >Nombre completo</label>
-                        <input type="text" id="nombreUsuario" class="form-control" autocomplete="off" />
-                    </div>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -145,8 +143,32 @@
                             <tbody id="fechasSeleccionadasContainer"></tbody>
                         </table>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="print_button border-0 px-4" data-bs-toggle="modal" data-bs-target="#nameModal" data-section="resume_modal"
+                        data-value="btn_continue">Continuar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <button class="btn btn-dark rounded-3" id="btnDescargar" data-section="resume_modal" data-value="save_pdf">
+    <!-- Modal Write your name -->
+    <div class="modal fade" id="nameModal" tabindex="-1" aria-labelledby="nameModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" data-section="resume_modal" data-value="modal_title_download">Descargar PDF</h5>
+                    <button type="button" class="btn-close p-2 rounded-3" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="my-2">
+                        <label for="nombreUsuario" data-section="resume_modal" data-value="fullname">Nombre completo</label>
+                        <input type="text" id="nombreUsuario" class="form-control" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-dark rounded-3" id="btnDescargar" data-section="resume_modal" data-value="btn_download">
                         Descargar
                     </button>
                 </div>

@@ -15,12 +15,15 @@
         "resume_btn" : "Ver resumen"
     },
     "resume_modal" : {
-        "fullname" : "Escribe tu nombre",
+        "modal_title" : "Resumen",
+        "modal_title_download": "Descargar PDF",
+        "fullname" : "Escribe tu nombre para descargar",
         "table_date" : "Fecha",
         "table_start" : "Entrada",
         "table_end" : "Salida",
         "table_break" : "Descanso",
-        "save_pdf" : "Guardar PDF"
+        "btn_continue" : "Continuar",
+        "btn_download" : "Descargar"
     },
     "pdf" : {
         "user": "User Name",
