@@ -6,7 +6,7 @@ function onYouTubeIframeAPIReady() {
     width: "640",
     videoId: "AtPlaXdHdDw",
     playerVars: {
-      autoplay: 1,
+      autoplay: 0,
       modestbranding: 1,
     },
   });

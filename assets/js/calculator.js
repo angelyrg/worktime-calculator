@@ -47,8 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
         onReady: function (selectedDates, dateStr, instance) {
             instance.calendarContainer.classList.add("flatpickr-calendario");
             const okButton = document.createElement("button");
-            okButton.textContent = "OK";
-            okButton.className = "border-0 px-3 py-2 rounded-3 w-100";
+            okButton.textContent = "Add";
+            okButton.className = "border px-3 py-2 rounded-3 w-50";
             okButton.addEventListener("click", () => {
             instance.close();
             });
@@ -148,35 +148,23 @@ function setCurrentMonthYear() {
   inputMesActual.value = mesYAnio;
 }
 
-function descargarPDF(fechasSeleccionadas) {
+
+async function cargarTraducciones(language) {
+  const response = await fetch(`./../../lang/${language}.json`);
+  if (!response.ok) {
+    throw new Error('No se pudo cargar el archivo de idioma');
+  }
+  return await response.json();
+}
+
+async function descargarPDF(fechasSeleccionadas) {
 
     const preferredLanguage = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0];
-    const idiomas = {
-        es: {
-          user: "Nombre del Usuario",
-          date: "Fecha",
-          in: "Entrada",
-          out: "Salida",
-          break: "Descanso",
-          resume: "Resumen",
-          total_hours: "Horas Totales",
-          price_per_hour: "Precio por Hora",
-          total_amount: "Monto Total"
-        },
-        en: {
-          user: "User Name",
-          date: "Date",
-          in: "In",
-          out: "Out",
-          break: "Break",
-          resume: "Resume",
-          total_hours: "Total Hours",
-          price_per_hour: "Price per Hour",
-          total_amount: "Total Amount"
-        }
-      };
+
     
-    const traducciones = idiomas[preferredLanguage];
+    const texts = await cargarTraducciones(preferredLanguage);
+    const traducciones = texts.pdf;
+    console.log(preferredLanguage, traducciones);
 
 
   const { jsPDF } = window.jspdf;

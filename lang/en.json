@@ -26,14 +26,14 @@
         "btn_download": "Download"
     },
     "pdf" : {
-        "user": "Nombre del Usuario",
-        "date": "Fecha",
-        "in": "Entrada",
-        "out": "Salida",
-        "break": "Descanso",
-        "resume": "Resumen",
-        "total_hours": "Horas Totales",
-        "price_per_hour": "Precio por Hora",
-        "total_amount": "Monto Total"
+        "user": "User Name",
+        "date": "Date",
+        "in": "In",
+        "out": "Out",
+        "break": "Break",
+        "resume": "Resume",
+        "total_hours": "Total Hours",
+        "price_per_hour": "Price per Hour",
+        "total_amount": "Total Amount"
       }
 }
