@@ -82,7 +82,9 @@
                 <div class="form_row">
                     <div class="input_group">
                         <label data-section="main_form" data-value="calendar"></label>
-                        <button type="input" id="seleccionarFechas" data-section="main_form" data-value="calendar_btn"></button>
+                        <button type="input" class="btn rounded-2 bg-white" id="seleccionarFechas">
+                            <span data-section="main_form" data-value="calendar_btn"></span>
+                        </button>
                     </div>
                 </div>
 
@@ -102,22 +104,24 @@
                     </div>
                     <div class="input_group">
                         <label for="total_horas" data-section="main_form" data-value="total_hours">Total Horas</label>
-                        <input type="button" id="total_horas" class="disabled" value="0">
+                        <input type="button" id="total_horas" class="disabled" value="00:00" disabled/>
                     </div>
                 </div>
 
                 <div class="form_row">
                     <div class="input_group">
                         <label for="monto_total" data-section="main_form" data-value="total_amount">Monto Total</label>
-                        <input type="button" id="monto_total" class="disabled" value="0.00">
+                        <input type="button" id="monto_total" class="disabled" value="£0.00" disabled/>
                     </div>
                 </div>
 
+                <hr/>
+
                 <div class="form_row">
                     <div class="input_group">
-                        <label data-section="main_form" data-value="resume">Resumen</label>
+                        <!-- <label data-section="main_form" data-value="resume">Resumen</label> -->
                         <button class="print_button border-0 position-relative"  data-bs-toggle="modal" data-bs-target="#resumenModal" >
-                            <span data-section="main_form" data-value="resume_btn">Ver resumen</span>
+                            <span data-section="main_form" data-value="resume_btn">Resumen</span>
                             <span class="badge text-bg-light rounded-pill" id="total_dias_selected"></span>
                         </button>
                     </div>
@@ -127,7 +131,7 @@
     </div>
 
     <!-- Modal Resume -->
-    <div class="modal fade" id="resumenModal" tabindex="-1" aria-labelledby="resumenModalLabel" aria-hidden="true">
+    <div class="modal fade" id="resumenModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="resumenModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -135,32 +139,90 @@
                     <button type="button" class="btn-close p-2 rounded-3" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    
+                    <button class="btn_edit" id="btn_edit" data-section="resume_modal" data-value="btn_edit" data-bs-toggle="modal" data-bs-target="#modalEditarHoras" disabled>
+                        Edit
+                    </button>
+                    <button class="btn_remove" id="btn_remove" data-section="resume_modal" data-value="btn_delete" disabled >
+                        Remove
+                    </button>
+
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-sm">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>#</th>
                                     <th data-section="resume_modal" data-value="table_date">Fecha</th>
                                     <th data-section="resume_modal" data-value="table_start">Entrada</th>
                                     <th data-section="resume_modal" data-value="table_end">Salida</th>
                                     <th data-section="resume_modal" data-value="table_break">Descanso</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody id="fechasSeleccionadasContainer"></tbody>
                         </table>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button class="print_button border-0 px-4" data-bs-toggle="modal" data-bs-target="#nameModal" data-section="resume_modal"
-                        data-value="btn_continue">Continuar</button>
+                <div class="modal-footer justify-content-between">
+                    <div class="text-start">
+                        <span data-section="resume_modal" data-value="resume_total_hours">Total hours:</span>
+                        <span id="totalHoursModal"></span>
+                        <br>
+                        <span data-section="resume_modal" data-value="resume_total_amount">Total amount:</span>
+                        <span id="totalAmountModal"></span>
+                    </div>
+                    <button class="print_button border-0 px-4" id="saveButton" data-bs-toggle="modal" data-bs-target="#nameModal" data-section="resume_modal"
+                        data-value="btn_continue" disabled>
+                        Continuar
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modal Editar Horas -->
+    <div class="modal" tabindex="-1" id="modalEditarHoras" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" data-section="resume_modal" data-value="modal_edit">Editar Horas</h5>
+                </div>
+                <form id="formEditarHoras" >
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-4">
+                                <label for="modalEntradaEdit" data-section="resume_modal" data-value="edit_in">Ingreso:</label>
+                                <input type="time" id="modalEntradaEdit" class="form-control" />
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="modalSalidaEdit" data-section="resume_modal" data-value="edit_out">Salida:</label>
+                                <input type="time" id="modalSalidaEdit" class="form-control" />
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="modalDescansoEdit" data-section="resume_modal" data-value="edit_break">Descanso:</label>
+                                <input type="number" id="modalDescansoEdit" class="form-control" pattern="[0-9]*" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="my-3">
+                            <small id="editModalError" class="text-danger"></small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-section="resume_modal" data-value="edit_cancel" data-dismiss="modal" data-bs-toggle="modal" data-bs-target="#resumenModal">
+                            Cancelar
+                        </button>
+                        <button type="button" class="print_button p-2" data-section="resume_modal" data-value="edit_save" id="btnGuardarCambios">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Modal Write your name -->
-    <div class="modal fade" id="nameModal" tabindex="-1" aria-labelledby="nameModalLabel" aria-hidden="true">
+    <div class="modal" id="nameModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="nameModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -183,6 +245,25 @@
         </div>
     </div>
 
+    <!-- Modal Thans for save -->
+    <div class="modal" id="thanksModal" tabindex="-1" aria-labelledby="thanksModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close p-2 rounded-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h2 class="text-center">Gracias por descargar</h2>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-dark rounded-3">
+                        Aceptar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Videotutorial -->
     <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -198,14 +279,12 @@
         </div>
     </div>
 
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- Toasts -->
+    <div class="toast-container mt-5 position-fixed top-0 end-0 p-3">
         <div id="miToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Notificación</strong>
+            <div class="toast-body d-flex justify-content-between">
+                <div id="toastBody"></div>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Cerrar"></button>
-            </div>
-            <div class="toast-body">
-                ¡Hola, soy un Toast de Bootstrap!
             </div>
         </div>
     </div>

@@ -7,8 +7,8 @@
         "start_time" : "In",
         "finish_time" : "Out",
         "break_time" : "Break",
-        "calendar" : "Date",
-        "calendar_btn" : "Choose dates to add",
+        "calendar" : "Worked days",
+        "calendar_btn" : "Choose dates",
         "price_hour" : "Price/Hour",
         "total_hours" : "Total Hours",
         "total_amount" : "Total Amount",
@@ -23,8 +23,19 @@
         "table_start" : "In",
         "table_end" : "Out",
         "table_break" : "Break",
-        "btn_continue": "Continue",
-        "btn_download": "Download"
+        "table_action" : "Action",
+        "btn_continue": "Save",
+        "btn_download": "Download",
+        "resume_total_hours": "Total hours:",
+        "resume_total_amount": "Total amount:",
+        "btn_edit": "Edit",
+        "btn_delete": "Remove",
+        "modal_edit": "Edit hours",
+        "edit_in": "In",
+        "edit_out": "Out",
+        "edit_break": "Break",
+        "edit_cancel": "Cancel",
+        "edit_save": "Save"
     },
     "pdf" : {
         "user": "User Name",
@@ -36,5 +47,11 @@
         "total_hours": "Total Hours",
         "price_per_hour": "Price per Hour",
         "total_amount": "Total Amount"
-      }
+    },
+    "js": {
+        "add_dates": "Add dates",
+        "dates_added": "days added",
+        "dates_edited": "Dates updated",
+        "dates_removed": "Dates deleted"
+    }
 }

@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
 const changeLanguage = async language => {
     localStorage.setItem('preferredLanguage', language);
 

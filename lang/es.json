@@ -7,8 +7,8 @@
         "start_time" : "Ingreso",
         "finish_time" : "Salida",
         "break_time" : "Descanso",
-        "calendar" : "Calendario",
-        "calendar_btn" : "Seleccione días para agregar",
+        "calendar" : "Días trabajados",
+        "calendar_btn" : "Seleccione fechas",
         "price_hour" : "Precio/Hora",
         "total_hours" : "Total Horas",
         "total_amount" : "Monto total",
@@ -23,8 +23,20 @@
         "table_start" : "Entrada",
         "table_end" : "Salida",
         "table_break" : "Descanso",
-        "btn_continue" : "Continuar",
-        "btn_download" : "Descargar"
+        "table_action" : "Acción",
+        "btn_continue" : "Guardar",
+        "btn_download" : "Descargar",
+        "resume_total_hours": "Total horas:",
+        "resume_total_amount": "Total monto:",
+        "btn_edit": "Editar",
+        "btn_delete": "Eliminar",
+        "modal_edit": "Editar horas",
+        "edit_in": "Ingreso",
+        "edit_out": "Salida",
+        "edit_break": "Descanso",
+        "edit_cancel": "Cancelar",
+        "edit_save": "Guardar"
+
     },
     "pdf" : {
         "user": "Nombre del Usuario",
@@ -33,8 +45,14 @@
         "out": "Salida",
         "break": "Descanso",
         "resume": "Resumen",
-        "total_hours": "Horas Totales",
+        "total_hours": "Total Horas",
         "price_per_hour": "Precio por Hora",
-        "total_amount": "Monto Total"
-      }
+        "total_amount": "Total Monto"
+    },
+    "js" : {
+        "add_dates" : "Agregar fechas",
+        "dates_added" : "días agregadas",
+        "dates_edited" : "Fechas actualizadas",
+        "dates_removed" : "Fechas eliminadas"
+    }
 }

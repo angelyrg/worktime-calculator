@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
 :root{
     --color-dark : #000;
 }
@@ -8,9 +10,11 @@ body{
     background-image: url('https://images.pexels.com/photos/5346459/pexels-photo-5346459.jpeg');
     background-position: center;
     background-size: cover;
-
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 17px;
+}
+
+*{
+    font-family: "Outfit", sans-serif;;
 }
 
 .navbar{
@@ -88,6 +92,7 @@ body{
     /* justify-content: center; */
     display: flex;
     flex-direction: column;
+    gap: 5px;
 }
 
 
@@ -114,14 +119,14 @@ body{
 
 .input_group input:active{
     background-color: #FFFFFF;
-    border: 1px solid var(--color-dark);
+    /* border: 1px solid var(--color-dark); */
 }
 
 .input_group input:focus{
     background-color: #FFFFFF;
     outline: none;
     cursor: pointer;
-    border: 1px solid var(--color-dark);
+    /* border: 1px solid var(--color-dark); */
 }
 
 #moneda{
@@ -134,33 +139,44 @@ input, select{
     -webkit-appearance: none;
     -webkit-text-fill-color: #000000;
     opacity: 1;
+    cursor: pointer;
 }
 
-
-button{
-    min-height: 38px;
+.row-checkbox{
+    -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
+    appearance: checkbox;
 }
 
 select:focus{
     outline: none;
 }
 
-input.disabled:focus{
+input.disabled{
+    background-color: rgb(215, 215, 215);
+}
+
+input.disabled:focus, input.disabled:active, input.disabled:hover {
     border: none;
     cursor: default;
+    background-color: rgb(215, 215, 215);
 }
 
 .print_button{
     background-color: var(--color-dark);
     color: #fff;
-    /* font-size: 22px; */
-    padding: 7px;
+    padding: 10px;
     border-radius: 6px;
+}
+
+.print_button:disabled, .print_button:disabled:hover{
+    background-color: transparent;
+    color: gray;
+    border: 1px solid gray;
 }
 
 .print_button:hover{
     background-color:#303030;
-    
 }
 
 .precio_hora_container{
@@ -190,6 +206,11 @@ input.disabled:focus{
 
 .flatpickr-calendario {
     max-width: 300px;
+}
+
+.flatpickr-disabled{
+    background-color: rgba(0, 0, 0, 0.05) !important;
+    color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .add_button{
@@ -224,6 +245,24 @@ input.disabled:focus{
     margin: auto;
 }
 
+.btn_edit{
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 3px;
+    background-color: transparent;
+    color: rgb(5, 155, 42);
+}
+.btn_remove{
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 3px;
+    background-color: transparent;
+    color: tomato;
+}
+
+.btn_edit:disabled, .btn_remove:disabled{
+    color: gray;
+}
 
 /* Estilos para pantallas pequeñas (por ejemplo, menos de 576px) */
 @media (max-width: 575.98px) {
