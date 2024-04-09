@@ -5,57 +5,17 @@ let totalResumen = {
   totalHorasFormateado: "00:00",
 };
 
-let entradaDefault = document.getElementById("horaEntrada").value;
-let salidaDefault = document.getElementById("horaSalida").value;
-let descansoDefault = parseInt(document.getElementById("descanso").value) || 0;
-
 
 document.addEventListener("DOMContentLoaded", () => {
-  setCurrentMonthYear();
+  var toastEl = document.getElementById('miToast');
+  var toast = new bootstrap.Toast(toastEl);
+  toast.show();
 
-  document.querySelectorAll("#horaEntrada, #horaSalida, #descanso, #precio_hora, #moneda").forEach((elem) => {
+  document.querySelectorAll("#precio_hora, #moneda").forEach((elem) => {
       elem.addEventListener("change", () => {
-        actualizarData(fechasSeleccionadas);
         calcularTotal(fechasSeleccionadas);
-        actualizarUIData(fechasSeleccionadas);
+
       });
-    });
-
-    //Abrir calendario
-    document.getElementById("seleccionarFechas").addEventListener("click", () => {
-        // Abrir calendario
-        flatpickr("#calendarioContainer", {
-        mode: "multiple",
-        dateFormat: "Y-m-d",
-        enableTime: false,
-        defaultDate: Object.keys(fechasSeleccionadas),
-        onClose: function (selectedDates) {
-            const fechasActualizadas = {};
-            selectedDates.forEach((date) => {
-            const dateString = date.toISOString().substring(0, 10);
-            fechasActualizadas[dateString] = {
-                entrada: entradaDefault,
-                salida: salidaDefault,
-                descanso: descansoDefault,
-            };
-            });
-            fechasSeleccionadas = fechasActualizadas;
-            actualizarData(fechasSeleccionadas);
-            calcularTotal(fechasSeleccionadas);
-            actualizarUIData(fechasSeleccionadas);
-        },
-        onReady: function (selectedDates, dateStr, instance) {
-            instance.calendarContainer.classList.add("flatpickr-calendario");
-            const okButton = document.createElement("button");
-            okButton.textContent = "Add";
-            okButton.className = "border px-3 py-2 rounded-3 w-50";
-            okButton.addEventListener("click", () => {
-            instance.close();
-            });
-
-            instance.calendarContainer.prepend(okButton);
-        },
-        }).open();
     });
 
   const btnDescargar = document.getElementById("btnDescargar");
@@ -64,25 +24,109 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 });
 
+document.getElementById("seleccionarFechas").addEventListener("click", () => {
+  // Convertir las claves del objeto fechasSeleccionadas a un array para establecer como fechas predeterminadas
+  const fechasPredeterminadas = Object.keys(fechasSeleccionadas);
+  
+  // Abrir calendario con Flatpickr
+  flatpickr("#calendarioContainer", {
+      mode: "multiple",
+      dateFormat: "Y-m-d",
+      enableTime: false,
+      defaultDate: fechasPredeterminadas, // Establece las fechas seleccionadas como fechas predeterminadas
+      disable: fechasPredeterminadas, // Deshabilita las fechas que ya han sido seleccionadas
+      onClose: function (selectedDates) {
+          selectedDates.forEach((date) => {
+              const dateString = date.toISOString().substring(0, 10);
+              if (!fechasSeleccionadas.hasOwnProperty(dateString)) {
+                  fechasSeleccionadas[dateString] = {
+                      entrada: $("#horaEntrada").val(),
+                      salida: $("#horaSalida").val(),
+                      descanso: $("#descanso").val(),
+                      totalHoras: calcularHorasTrabajadas()
+                  };
+              }
+          });
+
+          calcularTotal(fechasSeleccionadas);
+          actualizarUIData(fechasSeleccionadas);
+          sumarTotalHorasYCalcularPago(fechasSeleccionadas)
+          updateTotalDiasCounter();
+
+      },
+      onReady: function(selectedDates, dateStr, instance) {
+          const okButton = document.createElement("button");
+          okButton.textContent = "Agregar";
+          okButton.className = "add_button";
+          okButton.addEventListener("click", () => instance.close());
+          instance.calendarContainer.appendChild(okButton);
+      }
+  }).open();
+
+  
+});
+
+
+function calcularHorasTrabajadas() {
+  const entrada = document.getElementById("horaEntrada").value;
+  const salida = document.getElementById("horaSalida").value;
+  const descanso = parseInt(document.getElementById("descanso").value) || 0;
+
+  // Convertir las horas y minutos a minutos totales desde medianoche
+  const [horaEntrada, minutoEntrada] = entrada.split(':').map(n => parseInt(n));
+  const [horaSalida, minutoSalida] = salida.split(':').map(n => parseInt(n));
+
+  const entradaTotalMinutos = horaEntrada * 60 + minutoEntrada;
+  const salidaTotalMinutos = horaSalida * 60 + minutoSalida;
+
+  let minutosTrabajados = salidaTotalMinutos - entradaTotalMinutos - descanso;
+
+  const horasTrabajadas = Math.floor(minutosTrabajados / 60);
+  const minutosRestantes = minutosTrabajados % 60;
+
+  return `${horasTrabajadas}:${minutosRestantes.toString().padStart(2, '0')}`;
+}
+
+function sumarTotalHorasYCalcularPago(dates) {
+  const MontoPorHora = $("#precio_hora").val();
+  let totalMinutos = 0;
+
+  Object.values(dates).forEach(fecha => {
+    const [horas, minutos] = fecha.totalHoras.split(":").map(Number);
+    totalMinutos += horas * 60 + minutos;
+  });
+
+  const totalHorasDecimal = totalMinutos / 60;
+  const pagoTotal = totalHorasDecimal * MontoPorHora;
+
+  return {
+    totalHorasDecimal: totalHorasDecimal.toFixed(2),
+    pagoTotal: pagoTotal.toFixed(2)
+  };
+}
 
 function actualizarUIData(dates) {
     const container = document.getElementById("fechasSeleccionadasContainer");
     container.innerHTML = "";
+    let contador = 1;
     Object.keys(dates).forEach((fecha) => {
-        let detalles = dates[fecha];
-        container.innerHTML += `
-                    <tr>
-                        <td>${fecha}</td>
-                        <td>${detalles.entrada}
-                        <td>${detalles.salida}</td>
-                        <td>${detalles.descanso} mins</td>
-                    </tr>
-                `;
+      let detalles = dates[fecha];
+      let descansoFormateado = (!detalles.descanso || detalles.descanso === "0") ? "00:00" : "00:"+detalles.descanso;
+      container.innerHTML += `
+          <tr>
+              <td>${contador}</td>
+              <td>${fecha}</td>
+              <td>${detalles.entrada}
+              <td>${detalles.salida}</td>
+              <td>${descansoFormateado}</td>
+              <td><button>x</button></td>
+          </tr>`;
+      contador++;
     });
 
-    //   Actualizar campos en el form
+    //Actualizar campos en el form
     const monedaSeleccionada = document.getElementById("moneda").value;
-    document.getElementById("monto_total").value = `${totalResumen.totalMonto.toFixed(2)} ${monedaSeleccionada}`;
+    document.getElementById("monto_total").value = `${totalResumen.totalMonto} ${monedaSeleccionada}`;
     document.getElementById("total_horas").value = `${totalResumen.totalHorasFormateado}`;
 }
 
@@ -110,44 +154,40 @@ function actualizarData(dates) {
 }
 
 function calcularTotal(dates) {
-    const pagoPorHora = parseFloat(
-        document.getElementById("precio_hora").value || 0
-    );
+  const pagoPorHora = parseFloat($("#precio_hora").val() || 0);
 
-    let totalHorasResumen = 0;
-    Object.keys(dates).forEach((fecha) => {
-        totalHorasResumen += dates[fecha].totalHoras;
-    });
+  let totalMinutos = 0;
 
-    const totalMontoResumen = totalHorasResumen * pagoPorHora;
+  // Sumar todas las horas y minutos trabajados convertidos a minutos
+  Object.values(dates).forEach(({totalHoras}) => {
+    const [horas, minutos] = totalHoras.split(":").map(Number);
+    totalMinutos += horas * 60 + minutos;
+  });
 
-    // Convertir fracciones de hora a minutos
-    const horas = Math.floor(totalHorasResumen); // Horas completas
-    const minutos = Math.round((totalHorasResumen - horas) * 60); // Minutos restantes
+  // Convertir minutos totales a horas en formato decimal
+  const totalHorasResumen = totalMinutos / 60;
+  
+  // Calcular el monto total
+  const totalMontoResumen = totalHorasResumen * pagoPorHora;
 
-    // Formatear a Horas:Minutos
-    const totalHorasFormateado = `${horas}:${minutos
-        .toString()
-        .padStart(2, "0")}`;
+  // Convertir de nuevo a formato HH:MM para la visualización
+  const horas = Math.floor(totalHorasResumen);
+  const minutos = Math.round((totalHorasResumen - horas) * 60);
 
-    totalResumen = {
-        totalMonto: totalMontoResumen,
-        totalHoras: totalHorasResumen,
-        totalHorasFormateado: totalHorasFormateado, // Redondea a dos decimales para el monto
-    };
+  const totalHorasFormateado = `${horas}:${minutos.toString().padStart(2, "0")}`;
+
+  totalResumen = {
+      totalHoras: totalHorasResumen.toFixed(2), // Horas totales en formato decimal
+      totalMonto: totalMontoResumen.toFixed(2), // Monto total basado en el pago por hora
+      totalHorasFormateado: totalHorasFormateado // Horas y minutos formateados para visualización
+  };
 }
 
-function setCurrentMonthYear() {
-  const inputMesActual = document.getElementById("seleccionarFechas");
-  const fechaActual = new Date();
-  const opciones = { month: "long", year: "numeric" };
-  const idiomaNavegador = navigator.language;
-  const mesYAnio = new Intl.DateTimeFormat(idiomaNavegador, opciones).format(
-    fechaActual
-  );
-  inputMesActual.value = mesYAnio;
-}
 
+function updateTotalDiasCounter(){
+  const total = Object.keys(fechasSeleccionadas).length;
+  $("#total_dias_selected").text(total)
+}
 
 async function cargarTraducciones(language) {
   const response = await fetch(`./../../lang/${language}.json`);

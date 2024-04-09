@@ -76,15 +76,17 @@
                         <input type="number" id="descanso" value="" placeholder="Mins" pattern="[0-9]*" autocomplete="off"/>
                     </div>
                 </div>
+                <div id="calendarioContainer"></div>
+                
 
                 <div class="form_row">
                     <div class="input_group">
-                        <label data-section="main_form" data-value="calendar">Fechas</label>
-                        <input type="button" id="seleccionarFechas" value="Marzo 2024">
-                        <div id="calendarioContainer"></div>
+                        <label data-section="main_form" data-value="calendar"></label>
+                        <button type="input" id="seleccionarFechas" data-section="main_form" data-value="calendar_btn"></button>
                     </div>
                 </div>
 
+                <hr/>
 
                 <div class="form_row">
                     <div class="input_group">
@@ -114,7 +116,10 @@
                 <div class="form_row">
                     <div class="input_group">
                         <label data-section="main_form" data-value="resume">Resumen</label>
-                        <button class="print_button border-0"  data-bs-toggle="modal" data-bs-target="#resumenModal" data-section="main_form" data-value="resume_btn">Ver resumen</button>
+                        <button class="print_button border-0 position-relative"  data-bs-toggle="modal" data-bs-target="#resumenModal" >
+                            <span data-section="main_form" data-value="resume_btn">Ver resumen</span>
+                            <span class="badge text-bg-light rounded-pill" id="total_dias_selected"></span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -134,10 +139,12 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th data-section="resume_modal" data-value="table_date">Fecha</th>
                                     <th data-section="resume_modal" data-value="table_start">Entrada</th>
                                     <th data-section="resume_modal" data-value="table_end">Salida</th>
                                     <th data-section="resume_modal" data-value="table_break">Descanso</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody id="fechasSeleccionadasContainer"></tbody>
@@ -191,6 +198,19 @@
         </div>
     </div>
 
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="miToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Notificación</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+            </div>
+            <div class="toast-body">
+                ¡Hola, soy un Toast de Bootstrap!
+            </div>
+        </div>
+    </div>
+      
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -204,7 +224,7 @@
 
     <script src="assets/js/calculator.js"></script>
     <script src="assets/js/language.js"></script>
-    <script src="assets/js/video.js"></script>
+    <!-- <script src="assets/js/video.js"></script> -->
 
 </body>
 

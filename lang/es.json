@@ -8,6 +8,7 @@
         "finish_time" : "Salida",
         "break_time" : "Descanso",
         "calendar" : "Calendario",
+        "calendar_btn" : "Seleccione días para agregar",
         "price_hour" : "Precio/Hora",
         "total_hours" : "Total Horas",
         "total_amount" : "Monto total",

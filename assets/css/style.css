@@ -192,6 +192,39 @@ input.disabled:focus{
     max-width: 300px;
 }
 
+.add_button{
+    background-color: #000000;
+    color: #FFF;
+    padding: 10px 30px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.add_button:hover{
+    background-color: #303030;
+}
+
+.modal-background {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Fijo en toda la pantalla */
+    z-index: 1; /* Sitúa sobre el resto */
+    left: 0;
+    top: 0;
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Alto completo */
+    overflow: auto; /* Habilita scroll si es necesario */
+    background-color: rgba(0,0,0,0.4); /* Fondo negro con opacidad */
+}
+
+.modal-calendario-content {
+    /* margin: 40% auto; */
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    margin: auto;
+}
+
+
 /* Estilos para pantallas pequeñas (por ejemplo, menos de 576px) */
 @media (max-width: 575.98px) {
     .flatpickr-calendario {

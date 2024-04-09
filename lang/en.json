@@ -8,6 +8,7 @@
         "finish_time" : "Out",
         "break_time" : "Break",
         "calendar" : "Date",
+        "calendar_btn" : "Choose dates to add",
         "price_hour" : "Price/Hour",
         "total_hours" : "Total Hours",
         "total_amount" : "Total Amount",
