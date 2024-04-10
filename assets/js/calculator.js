@@ -18,15 +18,6 @@ document.getElementById("precio_hora").addEventListener("click", () => {
 });
 
 document.getElementById("seleccionarFechas").addEventListener("click", () => {
-  openCalendar();
-});
-
-function openCalendar(){
-  // const preferredLanguage = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0];
-  // const texts = await cargarTraducciones(preferredLanguage);
-  // console.log("preferredLanguage", preferredLanguage);
-
-
   // Convertir las claves del objeto fechasSeleccionadas a un array para establecer como fechas predeterminadas
   const fechasPredeterminadas = Object.keys(fechasSeleccionadas);
 
@@ -73,7 +64,9 @@ function openCalendar(){
           instance.calendarContainer.appendChild(okButton);
       }
   }).open();
-}
+});
+
+
 
 
 function actualizarTotalResumenDATA(dates) {
