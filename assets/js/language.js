@@ -20,7 +20,7 @@ const changeLanguage = async language => {
   localStorage.setItem("preferredLanguage", language);
 
   // Carga el archivo JSON del idioma seleccionado
-  const requestJson = await fetch(`./lang/${language}.json`);
+  const requestJson = await fetch(`./../../lang/${language}.json`);
   const texts = await requestJson.json();
 
   // Busca todos los elementos que necesitan ser actualizados
