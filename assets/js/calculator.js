@@ -10,7 +10,6 @@ let translates = {};
 $(document).ready(async function () {
   try {
     translates = await cargarTraducciones();
-    console.log(translates);
   } catch (error) {
     console.error(error.message);
   }
