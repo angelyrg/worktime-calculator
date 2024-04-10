@@ -17,24 +17,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 const changeLanguage = async language => {
-    localStorage.setItem('preferredLanguage', language);
+  localStorage.setItem("preferredLanguage", language);
 
-    // Carga el archivo JSON del idioma seleccionado
-    const requestJson = await fetch(`./lang/${language}.json`);
-    const texts = await requestJson.json();
+  // Carga el archivo JSON del idioma seleccionado
+  const requestJson = await fetch(`./lang/${language}.json`);
+  const texts = await requestJson.json();
 
-    // Busca todos los elementos que necesitan ser actualizados
-    const textsToChange = document.querySelectorAll('[data-section][data-value]');
+  // Busca todos los elementos que necesitan ser actualizados
+  const textsToChange = document.querySelectorAll("[data-section][data-value]");
 
-    // Itera sobre los elementos y actualiza su contenido
-    for (const textToChange of textsToChange) {
-        const section = textToChange.getAttribute('data-section');
-        const value = textToChange.getAttribute('data-value');
-        textToChange.innerHTML = texts[section][value];   
-    }
+  // Itera sobre los elementos y actualiza su contenido
+  for (const textToChange of textsToChange) {
+    const section = textToChange.getAttribute("data-section");
+    const value = textToChange.getAttribute("data-value");
+    textToChange.innerHTML = texts[section][value];
+  }
 
-    // Opcional: Actualizar el botón del dropdown para reflejar el idioma seleccionado
-    updateDropdownButton(language);
+  // Actualizar el botón del dropdown para reflejar el idioma seleccionado
+  updateDropdownButton(language);
+
+  //Actualiza la variable global translates
+  try {
+    translates = await cargarTraducciones();
+  } catch (error) {
+    console.error(error.message);
+  }
 };
 
 // Función adicional para actualizar el botón del dropdown con la bandera e idioma actual

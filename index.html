@@ -143,7 +143,7 @@
                     <button class="btn_edit" id="btn_edit" data-section="resume_modal" data-value="btn_edit" data-bs-toggle="modal" data-bs-target="#modalEditarHoras" disabled>
                         Edit
                     </button>
-                    <button class="btn_remove" id="btn_remove" data-section="resume_modal" data-value="btn_delete" disabled >
+                    <button class="btn_edit" id="btn_remove" data-section="resume_modal" data-value="btn_delete" disabled>
                         Remove
                     </button>
 
@@ -157,6 +157,7 @@
                                     <th data-section="resume_modal" data-value="table_start">Entrada</th>
                                     <th data-section="resume_modal" data-value="table_end">Salida</th>
                                     <th data-section="resume_modal" data-value="table_break">Descanso</th>
+                                    <th data-section="resume_modal" data-value="table_total">Descanso</th>
                                 </tr>
                             </thead>
                             <tbody id="fechasSeleccionadasContainer"></tbody>
@@ -172,7 +173,7 @@
                         <span id="totalAmountModal"></span>
                     </div>
                     <button class="print_button border-0 px-4" id="saveButton" data-bs-toggle="modal" data-bs-target="#nameModal" data-section="resume_modal"
-                        data-value="btn_continue" disabled>
+                        data-value="btn_save" disabled>
                         Continuar
                     </button>
                 </div>
@@ -226,38 +227,38 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" data-section="resume_modal" data-value="modal_title_download">Descargar PDF</h5>
-                    <button type="button" class="btn-close p-2 rounded-3" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                    <h5 class="modal-title" data-section="resume_modal" data-value="modal_title_your_name">Descargar PDF</h5>
+                    <button type="button" class="btn-close p-2 rounded-3" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="my-2">
-                        <label for="nombreUsuario" data-section="resume_modal" data-value="fullname">Nombre completo</label>
-                        <input type="text" id="nombreUsuario" class="form-control" autocomplete="off" />
+                        <label class="my-2" for="inputNameToDownload" data-section="resume_modal" data-value="fullname">Nombre completo</label>
+                        <input type="text" id="inputNameToDownload" class="form-control" autocomplete="off" />
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-dark rounded-3" id="btnDescargar" data-section="resume_modal" data-value="btn_download">
-                        Descargar
+                    <button class="btn btn-dark rounded-3" data-bs-toggle="modal" data-bs-target="#downloadModal"
+                        data-section="resume_modal" data-value="btn_continue">
+                        Continuar
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Thans for save -->
-    <div class="modal" id="thanksModal" tabindex="-1" aria-labelledby="thanksModalLabel" aria-hidden="true">
+    <!-- Modal Thanks for save -->
+    <div class="modal" id="downloadModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="tdownloadModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h5 class="modal-title" data-section="resume_modal" data-value="modal_title_download"></h5>
                     <button type="button" class="btn-close p-2 rounded-3" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h2 class="text-center">Gracias por descargar</h2>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-dark rounded-3">
-                        Aceptar
+                <div class="modal-body text-center">
+                    <img src="assets/img/logotipo.svg" width="20%" class="img-fluid" alt="tutime logo">
+                    <p class="my-3" data-section="resume_modal" data-value="file_ready"></p>
+                    <button class="btn btn-dark btn-lg rounded-3" id="btnDescargar" data-section="resume_modal" data-value="btn_download">
+                        Descargar
                     </button>
                 </div>
             </div>

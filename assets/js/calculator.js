@@ -5,6 +5,16 @@ let totalResumen = {
   totalHorasFormateado: "00:00",
 };
 
+let translates = {};
+
+$(document).ready(async function () {
+  try {
+    translates = await cargarTraducciones();
+    console.log(translates);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 
 document.getElementById("moneda").addEventListener("change", updateResumenFormUI);
 
@@ -47,7 +57,9 @@ document.getElementById("seleccionarFechas").addEventListener("click", () => {
               }
           });
 
-          showToast(`${diasAgregados} días agregados`);
+          if (diasAgregados>0) {
+            showToast(`${diasAgregados} ${translates.js.dates_added}`);
+          }
 
           actualizarTotalResumenDATA(fechasSeleccionadas);
           actualizarTablaResumenUI(fechasSeleccionadas);
@@ -58,7 +70,7 @@ document.getElementById("seleccionarFechas").addEventListener("click", () => {
       onReady: function(selectedDates, dateStr, instance) {
           const okButton = document.createElement("button");
           // okButton.textContent = `${texts.js.add_dates}`;
-          okButton.textContent = `Agregar fechas`;
+          okButton.textContent = `${translates.js.add_dates}`;
           okButton.className = "add_button";
           okButton.addEventListener("click", () => instance.close());
           instance.calendarContainer.appendChild(okButton);
@@ -106,6 +118,10 @@ function actualizarTablaResumenUI(dates) {
   container.innerHTML = "";
   let contador = 1;
   Object.keys(dates).forEach((fecha) => {
+
+    const partesFecha = fecha.split('-'); // ["yyyy", "mm", "dd"]
+    const fechaFormateada = `${partesFecha[2]}/${partesFecha[1]}/${partesFecha[0].substring(2)}`; // "dd/mm/yy"
+
     let detalles = dates[fecha];
     let descansoFormateado =
       !detalles.descanso || detalles.descanso === "0"
@@ -117,10 +133,11 @@ function actualizarTablaResumenUI(dates) {
                 <input type="checkbox" class="row-checkbox" data-fecha="${fecha}" />
               </td>
               <td>${contador}</td>
-              <td>${fecha}</td>
+              <td>${fechaFormateada}</td>
               <td>${detalles.entrada}</td>
               <td>${detalles.salida}</td>
               <td>${descansoFormateado}</td>
+              <td>${detalles.totalHoras}</td>
           </tr>`;
     contador++;
   });
@@ -150,8 +167,7 @@ document.querySelector('#btn_remove').addEventListener('click', () => {
   document.querySelectorAll('.row-checkbox:checked').forEach(checkbox => {
     delete fechasSeleccionadas[checkbox.dataset.fecha];
   });
-  // TODO: TRANSALTE
-  showToast(`Fechas eliminadas`);
+  showToast(`${translates.js.dates_removed}`);
   actualizarTotalResumenDATA(fechasSeleccionadas);
   actualizarTablaResumenUI(fechasSeleccionadas);
   updateTotalDiasCounterUI();
@@ -191,7 +207,7 @@ document.getElementById('btnGuardarCambios').addEventListener('click', () => {
   const descanso = document.getElementById('modalDescansoEdit').value;
 
   if (!entrada || !salida || descanso === "") {
-    $("#editModalError").text("Todos los campos son obligatorios");
+    $("#editModalError").text(`${translates.resume_modal.message_all_required}`);
     return;
   }
 
@@ -207,8 +223,7 @@ document.getElementById('btnGuardarCambios').addEventListener('click', () => {
     }
   });
 
-  // TODO: TRANSLATE
-  showToast(`Dates updates`);
+  showToast(`${translates.js.dates_edited}`);
 
   actualizarTotalResumenDATA(fechasSeleccionadas);
   // Actualizar la tabla UI
@@ -278,8 +293,9 @@ function eliminarFecha(fecha) {
   updateResumenFormUI();
 }
 
-async function cargarTraducciones(language) {
-  const response = await fetch(`./../../lang/${language}.json`);
+async function cargarTraducciones() {
+  const preferredLanguage = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0];
+  const response = await fetch(`./../../lang/${preferredLanguage}.json`);
   if (!response.ok) {
     throw new Error('No se pudo cargar el archivo de idioma');
   }
@@ -287,10 +303,6 @@ async function cargarTraducciones(language) {
 }
 
 async function descargarPDF(fechasSeleccionadas) {
-  const preferredLanguage = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0];
-  
-  const texts = await cargarTraducciones(preferredLanguage);
-  const traducciones = texts.pdf;
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
@@ -302,7 +314,7 @@ async function descargarPDF(fechasSeleccionadas) {
   const pageWidth = doc.internal.pageSize.getWidth() - marginLeft - marginRight;
 
   const img = new Image();
-  img.src = "./assets/img/logotipo-skyblue.png";
+  img.src = "./assets/img/logotipo-brand.png";
   img.onload = () => {
     const imgWidthInPdf = 50;
     const imgHeightInPdf = (imgWidthInPdf / 592) * 130;
@@ -331,7 +343,7 @@ async function descargarPDF(fechasSeleccionadas) {
     yPosition += 8;
 
     // Añade el nombre del usuario centrado y subrayado
-    const nombreUsuario = `${document.getElementById("nombreUsuario").value}`;
+    const nombreUsuario = `${document.getElementById("inputNameToDownload").value}`;
     const nombreUsuarioWidth = doc.getTextWidth(nombreUsuario);
     doc.text(
       nombreUsuario,
@@ -350,28 +362,43 @@ async function descargarPDF(fechasSeleccionadas) {
 
     yPosition += 15;
 
+    const columnWidth = pageWidth / 6;
+    
     doc.setFontSize(12);
-    doc.text(traducciones.date, marginLeft, yPosition);
-    doc.text(traducciones.in, marginLeft + pageWidth / 4, yPosition);
-    doc.text(traducciones.out, marginLeft + pageWidth / 2, yPosition);
-    doc.text(traducciones.break, marginLeft + (3 * pageWidth) / 4, yPosition);
+    doc.setFont("helvetica", "bold");
+
+    doc.text("N°", marginLeft, yPosition);
+    doc.text(translates.pdf.date, marginLeft + (columnWidth * 0.5), yPosition);
+    doc.text(translates.pdf.in, marginLeft + columnWidth * 2, yPosition);
+    doc.text(translates.pdf.out, marginLeft + columnWidth * 3, yPosition);
+    doc.text(translates.pdf.break, marginLeft + columnWidth * 4, yPosition);
+    doc.text(translates.pdf.total, marginLeft + columnWidth * 5, yPosition);
 
     yPosition += 7;
 
+    doc.setFont("helvetica", "normal");
+
+    let contador = 1;
     Object.keys(fechasSeleccionadas).forEach((fecha) => {
       if (yPosition > doc.internal.pageSize.getHeight() - marginBottom) {
         doc.addPage();
         yPosition = marginTop;
       }
-      const { entrada, salida, descanso } = fechasSeleccionadas[fecha];
-
+      const { entrada, salida, descanso, totalHoras } = fechasSeleccionadas[fecha];
       const descansoFormateado = !descanso || descanso === "0" ? "00:00" : "00:" + descanso;
 
-      doc.text(fecha, marginLeft, yPosition);
-      doc.text(entrada, marginLeft + pageWidth / 4, yPosition);
-      doc.text(salida, marginLeft + pageWidth / 2, yPosition);
-      doc.text(`${descansoFormateado}`, marginLeft + (3 * pageWidth) / 4, yPosition);
+      const partesFecha = fecha.split('-'); // ["yyyy", "mm", "dd"]
+      const fechaFormateada = `${partesFecha[2]}/${partesFecha[1]}/${partesFecha[0].substring(2)}`; // "dd/mm/yy"
+
+      doc.text(`${contador}`, marginLeft, yPosition); // Número de fila
+      doc.text(fechaFormateada, marginLeft + columnWidth * 0.5, yPosition); // Fecha
+      doc.text(entrada, marginLeft + columnWidth * 2, yPosition); // Hora de entrada
+      doc.text(salida, marginLeft + columnWidth * 3, yPosition); // Hora de salida
+      doc.text(descansoFormateado, marginLeft + columnWidth * 4, yPosition); // Descanso
+      doc.text(totalHoras, marginLeft + columnWidth * 5, yPosition); // Total de horas
+
       yPosition += 7;
+      contador++;
     });
 
     // Resumen al final
@@ -382,32 +409,30 @@ async function descargarPDF(fechasSeleccionadas) {
     }
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
-    doc.text(traducciones.resume, marginLeft, (yPosition += 10));
+    doc.text(translates.pdf.resume, marginLeft, (yPosition += 10));
     doc.setFont("helvetica", "normal");
     doc.text(
-      `${traducciones.total_hours}: ${totalResumen.totalHorasFormateado}`,
+      `${translates.pdf.total_hours}: ${totalResumen.totalHorasFormateado}`,
       marginLeft,
       (yPosition += 7)
     );
     doc.text(
-      `${traducciones.price_per_hour}: ${document.getElementById("moneda").value}${document.getElementById("precio_hora").value}`,
+      `${translates.pdf.price_per_hour}: ${document.getElementById("moneda").value}${document.getElementById("precio_hora").value}`,
       marginLeft,
       (yPosition += 6)
     );
     doc.text(
-      `${traducciones.total_amount}: ${document.getElementById("moneda").value}${totalResumen.totalMonto}`,
+      `${translates.pdf.total_amount}: ${document.getElementById("moneda").value}${totalResumen.totalMonto}`,
       marginLeft,
       (yPosition += 6)
     );
 
     doc.save("resume.pdf");
-
-
   };
-
-  // $("#thanksModal").modal('show');
 }
 
-document.getElementById("nameModal").addEventListener("shown.bs.modal", function () {
-    document.getElementById("nombreUsuario").focus();
+$("#nameModal").on("shown.bs.modal", function () {
+  setTimeout(function () {
+    document.getElementById("inputNameToDownload").focus();
+  }, 500);
 });
