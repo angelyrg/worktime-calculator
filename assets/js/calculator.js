@@ -21,10 +21,10 @@ document.getElementById("seleccionarFechas").addEventListener("click", () => {
   openCalendar();
 });
 
-async function openCalendar(){
-  const preferredLanguage = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0];
-  const texts = await cargarTraducciones(preferredLanguage);
-  console.log("traducciones", texts.js.add_dates);
+function openCalendar(){
+  // const preferredLanguage = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0];
+  // const texts = await cargarTraducciones(preferredLanguage);
+  // console.log("preferredLanguage", preferredLanguage);
 
 
   // Convertir las claves del objeto fechasSeleccionadas a un array para establecer como fechas predeterminadas
@@ -56,7 +56,7 @@ async function openCalendar(){
               }
           });
 
-          showToast(`${diasAgregados} ${texts.js.dates_added}`);
+          showToast(`${diasAgregados} días agregados`);
 
           actualizarTotalResumenDATA(fechasSeleccionadas);
           actualizarTablaResumenUI(fechasSeleccionadas);
@@ -66,7 +66,8 @@ async function openCalendar(){
       },
       onReady: function(selectedDates, dateStr, instance) {
           const okButton = document.createElement("button");
-          okButton.textContent = `${texts.js.add_dates}`;
+          // okButton.textContent = `${texts.js.add_dates}`;
+          okButton.textContent = `Agregar fechas`;
           okButton.className = "add_button";
           okButton.addEventListener("click", () => instance.close());
           instance.calendarContainer.appendChild(okButton);
