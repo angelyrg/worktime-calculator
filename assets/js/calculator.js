@@ -295,7 +295,7 @@ function eliminarFecha(fecha) {
 
 async function cargarTraducciones() {
   const preferredLanguage = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0];
-  const response = await fetch(`./../../lang/${preferredLanguage}.json`);
+  const response = await fetch(`./lang/${preferredLanguage}.json`);
   if (!response.ok) {
     throw new Error('No se pudo cargar el archivo de idioma');
   }
