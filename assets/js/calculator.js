@@ -27,7 +27,6 @@ document.getElementById("precio_hora").addEventListener("click", () => {
 });
 
 document.getElementById("seleccionarFechas").addEventListener("click", () => {
-  // Convertir las claves del objeto fechasSeleccionadas a un array para establecer como fechas predeterminadas
   const fechasPredeterminadas = Object.keys(fechasSeleccionadas);
 
   const entradaInput = $("#horaEntrada").val();
@@ -68,7 +67,6 @@ document.getElementById("seleccionarFechas").addEventListener("click", () => {
       },
       onReady: function(selectedDates, dateStr, instance) {
           const okButton = document.createElement("button");
-          // okButton.textContent = `${texts.js.add_dates}`;
           okButton.textContent = `${translates.js.add_dates}`;
           okButton.className = "add_button";
           okButton.addEventListener("click", () => instance.close());
@@ -85,7 +83,6 @@ function actualizarTotalResumenDATA(dates) {
 
   let totalMinutos = 0;
 
-  // Sumar todas las horas y minutos trabajados convertidos a minutos
   Object.values(dates).forEach(({ totalHoras }) => {
     const [horas, minutos] = totalHoras.split(":").map(Number);
     totalMinutos += horas * 60 + minutos;
@@ -94,7 +91,6 @@ function actualizarTotalResumenDATA(dates) {
   // Convertir minutos totales a horas en formato decimal
   const totalHorasResumen = totalMinutos / 60;
 
-  // Calcular el monto total
   const totalMontoResumen = totalHorasResumen * pagoPorHora;
 
   // Convertir de nuevo a formato HH:MM para la visualización
@@ -106,9 +102,9 @@ function actualizarTotalResumenDATA(dates) {
     .padStart(2, "0")}`;
 
   totalResumen = {
-    totalHoras: totalHorasResumen.toFixed(2), // Horas totales en formato decimal
-    totalMonto: totalMontoResumen.toFixed(2), // Monto total basado en el pago por hora
-    totalHorasFormateado: totalHorasFormateado, // Horas y minutos formateados para visualización
+    totalHoras: totalHorasResumen.toFixed(2),
+    totalMonto: totalMontoResumen.toFixed(2),
+    totalHorasFormateado: totalHorasFormateado,
   };
 }
 
@@ -141,27 +137,22 @@ function actualizarTablaResumenUI(dates) {
     contador++;
   });
 
-  // Después de actualizar la tabla, añade manejadores de eventos a los nuevos checkboxes
   document.querySelectorAll(".row-checkbox").forEach((checkbox) => {
     checkbox.addEventListener("change", verificarCheckboxesSeleccionados);
   });
 
-  // Llamar inicialmente para establecer el estado correcto de los botones
   verificarCheckboxesSeleccionados();
 
 }
 
 function verificarCheckboxesSeleccionados() {
-  // Comprobar si al menos un checkbox está seleccionado
   const alMenosUnoSeleccionado =
     document.querySelector(".row-checkbox:checked") !== null;
-
-  // Habilitar o deshabilitar los botones basado en si hay checkboxes seleccionados
+  
   document.getElementById("btn_edit").disabled = !alMenosUnoSeleccionado;
   document.getElementById("btn_remove").disabled = !alMenosUnoSeleccionado;
 }
 
-// Manejar clic en el botón Remove
 document.querySelector('#btn_remove').addEventListener('click', () => {
   document.querySelectorAll('.row-checkbox:checked').forEach(checkbox => {
     delete fechasSeleccionadas[checkbox.dataset.fecha];
@@ -173,23 +164,17 @@ document.querySelector('#btn_remove').addEventListener('click', () => {
   updateResumenFormUI();
 });
 
-// ---------------------------
-
-// Abrir el modal para editar
 document.getElementById('btn_edit').addEventListener('click', () => {
-  // Buscar el primer checkbox seleccionado
   const primerCheckboxSeleccionado = document.querySelector(
     ".row-checkbox:checked"
   );
 
   if (primerCheckboxSeleccionado) {
-    // Usar el valor de `data-fecha` para obtener los detalles de `fechasSeleccionadas`
     const fechaSeleccionada =
       primerCheckboxSeleccionado.getAttribute("data-fecha");
     const detalles = fechasSeleccionadas[fechaSeleccionada];
 
     if (detalles) {
-      // Autocompletar los campos del modal con los detalles encontrados
       document.getElementById("modalEntradaEdit").value = detalles.entrada;
       document.getElementById("modalSalidaEdit").value = detalles.salida;
       document.getElementById("modalDescansoEdit").value = detalles.descanso;
@@ -199,7 +184,7 @@ document.getElementById('btn_edit').addEventListener('click', () => {
   $("#modalEditarHoras").modal("show");
 });
 
-// Guardar los cambios al hacer clic en "Guardar Cambios" en el modal
+
 document.getElementById('btnGuardarCambios').addEventListener('click', () => {
   const entrada = document.getElementById('modalEntradaEdit').value;
   const salida = document.getElementById('modalSalidaEdit').value;
@@ -210,10 +195,8 @@ document.getElementById('btnGuardarCambios').addEventListener('click', () => {
     return;
   }
 
-  // Iterar sobre todas las filas con checkbox marcado
   document.querySelectorAll('.row-checkbox:checked').forEach(checkbox => {
     const fecha = checkbox.dataset.fecha;
-    // Actualizar los valores en el objeto fechasSeleccionadas
     if (fechasSeleccionadas.hasOwnProperty(fecha)) {
       fechasSeleccionadas[fecha].entrada = entrada,
       fechasSeleccionadas[fecha].salida = salida,
@@ -225,9 +208,8 @@ document.getElementById('btnGuardarCambios').addEventListener('click', () => {
   showToast(`${translates.js.dates_edited}`);
 
   actualizarTotalResumenDATA(fechasSeleccionadas);
-  // Actualizar la tabla UI
+  
   actualizarTablaResumenUI(fechasSeleccionadas);
-  actualizarTotalResumenDATA(fechasSeleccionadas);
   updateTotalDiasCounterUI();
   updateResumenFormUI();
 
@@ -236,7 +218,6 @@ document.getElementById('btnGuardarCambios').addEventListener('click', () => {
   $("#resumenModal").modal("show");
 });
 
-// ------------------------------
 
 function showToast(mesaje) {
   const toastEl = document.getElementById("miToast");
@@ -389,12 +370,12 @@ async function descargarPDF(fechasSeleccionadas) {
       const partesFecha = fecha.split('-'); // ["yyyy", "mm", "dd"]
       const fechaFormateada = `${partesFecha[2]}/${partesFecha[1]}/${partesFecha[0].substring(2)}`; // "dd/mm/yy"
 
-      doc.text(`${contador}`, marginLeft, yPosition); // Número de fila
-      doc.text(fechaFormateada, marginLeft + columnWidth * 0.5, yPosition); // Fecha
-      doc.text(entrada, marginLeft + columnWidth * 2, yPosition); // Hora de entrada
-      doc.text(salida, marginLeft + columnWidth * 3, yPosition); // Hora de salida
-      doc.text(descansoFormateado, marginLeft + columnWidth * 4, yPosition); // Descanso
-      doc.text(totalHoras, marginLeft + columnWidth * 5, yPosition); // Total de horas
+      doc.text(`${contador}`, marginLeft, yPosition);
+      doc.text(fechaFormateada, marginLeft + columnWidth * 0.5, yPosition);
+      doc.text(entrada, marginLeft + columnWidth * 2, yPosition);
+      doc.text(salida, marginLeft + columnWidth * 3, yPosition);
+      doc.text(descansoFormateado, marginLeft + columnWidth * 4, yPosition);
+      doc.text(totalHoras, marginLeft + columnWidth * 5, yPosition);
 
       yPosition += 7;
       contador++;
@@ -402,7 +383,6 @@ async function descargarPDF(fechasSeleccionadas) {
 
     // Resumen al final
     if (yPosition + 30 > doc.internal.pageSize.getHeight() - marginBottom) {
-      // Asegura espacio para el resumen
       doc.addPage();
       yPosition = marginTop;
     }

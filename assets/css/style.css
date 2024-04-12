@@ -2,12 +2,11 @@
 
 :root{
     --color-dark : #000;
+    --color-brand: #7BDFFF;
 }
 
 body{
-    /* background-image: url('https://approval.studio/wp-content/uploads/elementor/thumbs/branding-story-of-adidas-q8q1visjba9olaig1puawb8kzs2vo71tyd5c4zsqwg.jpg'); */
-    /* background-image: url('https://i.pinimg.com/originals/e1/c0/9d/e1c09d57a0aa792e014fa658a17295a0.jpg'); */
-    background-image: url('https://images.pexels.com/photos/5346459/pexels-photo-5346459.jpeg');
+    background-image: url('https://images.pexels.com/photos/5346459/pexels-photo-5346459.jpeg'); /* BACKGROUND IMAGE TEMP */
     background-position: center;
     background-size: cover;
     font-size: 17px;
@@ -25,13 +24,10 @@ body{
     display: flex;
 }
 
-.main_image{
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
+.flag-item:active{
+    background-color: var(--color-brand);
 }
+
 
 .main_container{
     max-width: 1200px;
@@ -43,24 +39,10 @@ body{
     overflow: hidden;
 }
 
-@media screen and (max-width: 1200px) {
-    .main_container{
-        padding-right: 80px;
-    }
-}
-
-@media screen and (max-width: 750px) {
-    .main_container{
-        justify-content: center;
-        padding-right: 0;
-    }    
-}
-
 .calculator_card{
     background-color: rgba(255, 255, 255, 0.6);
     max-width: 400px;
     border-radius: 20px;
-    /* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5); */
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.5); 
     padding: 20px;
 }
@@ -95,6 +77,10 @@ body{
     gap: 5px;
 }
 
+.btn_play:hover{
+    transform: scale(1.05);
+    transition: transform 100ms ease-in;
+}
 
 .input_group label{
     font-size: 17px;
@@ -146,6 +132,8 @@ input, select{
     -webkit-appearance: checkbox;
     -moz-appearance: checkbox;
     appearance: checkbox;
+    width: 17px;
+    height: 17px;
 }
 
 select:focus{
@@ -225,26 +213,6 @@ input.disabled:focus, input.disabled:active, input.disabled:hover {
     background-color: #303030;
 }
 
-.modal-background {
-    display: none; /* Oculto por defecto */
-    position: fixed; /* Fijo en toda la pantalla */
-    z-index: 1; /* Sitúa sobre el resto */
-    left: 0;
-    top: 0;
-    width: 100%; /* Ancho completo */
-    height: 100%; /* Alto completo */
-    overflow: auto; /* Habilita scroll si es necesario */
-    background-color: rgba(0,0,0,0.4); /* Fondo negro con opacidad */
-}
-
-.modal-calendario-content {
-    /* margin: 40% auto; */
-    padding: 20px;
-    width: 80%;
-    max-width: 500px;
-    margin: auto;
-}
-
 .btn_edit{
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px;
@@ -263,15 +231,25 @@ input.disabled:focus, input.disabled:active, input.disabled:hover {
     color: rgba(0, 0, 0, 0.3);
 }
 
-/* Estilos para pantallas pequeñas (por ejemplo, menos de 576px) */
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 1200px) {
+    .main_container{
+        padding-right: 80px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .main_container{
+        justify-content: center;
+        padding-right: 0;
+    }    
+}
+
 @media (max-width: 575.98px) {
     .flatpickr-calendario {
-        max-width: 100%; /* Hace que el calendario ocupe el ancho completo de la pantalla */
-        font-size: 12px; /* Reduce el tamaño de la fuente */
-        /* Ajusta otros estilos según necesites */
+        max-width: 100%;
+        font-size: 12px;
     }
-    .flatpickr-calendario .flatpickr-month {
-        /* Ajustes específicos para los elementos internos del calendario en pantallas pequeñas */
-    }
-    /* Continúa ajustando otros elementos internos del calendario según sea necesario */
 }
