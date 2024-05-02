@@ -1,14 +1,37 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 
-    <link rel="shortcut icon" href="assets/img/ico.svg" type="image/x-icon">
-    <title>Tu time</title>
-    <meta name="description" content="Calculate your working day and download">
-    <meta name="keywords" content="Worktime, Calculator, Hours, Work">
+    <!-- <link rel="shortcut icon" href="assets/img/ico.svg" type="image/x-icon"> -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <title>★ Tu time ★ - Working time and salary or payroll calculator</title>
+    <meta name="description" content="Calculate your hours worked and get paid what you deserve, tu time is a calculator that allows you to add up the hours worked and calculate the amount of your payroll or salary.">
+    <link rel="canonical" href="https://tu-time.com/" />
+    <meta property="og:locale" content="en_EN" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="★ Tu time ★ - Working time and salary or payroll calculator" />
+    <meta property="og:description" content="Calculate your hours worked and get paid what you deserve, tu time is a calculator that allows you to add up the hours worked and calculate the amount of your payroll or salary." />
+	<meta property="og:url" content="https://tu-time.com/" />
+	<meta property="og:site_name" content="tu-time.com" />
+	<meta property="article:modified_time" content="2024-04-05T18:41:55+00:00" />
+	<meta property="og:image" content="/android-chrome-512x512.png" />
+	<meta property="og:image:width" content="512" />
+	<meta property="og:image:height" content="512" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:label1" content="Working time and salary or payroll calculator" />
+	<meta name="twitter:data1" content="1 minutos" />
+    <meta name="keywords" content="Worktime, Calculator, Salary, Payroll">
+    <meta name="author" content="Tu time team">
+    <meta name="publisher" content="Tu time team">
+    <meta name="google" content="translate">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -18,117 +41,178 @@
 
 </head>
 
-<body>
+<body class="body">
 
-    <nav class="navbar">
-        <div class="container d-flex justify-content-between">
-            <a class="navbar-brand text-white" href="#" >
-                <img src="assets/img/logotipo-white.svg" class="img-fluid text-white" width="100" alt="Tu time">
-            </a>
+    <div class="contenido">
+        <main>
+            <nav class="navbar sticky-top">
+                <div class="container d-flex justify-content-between">
+                    <a class="navbar-brand text-white" href="index.html" >
+                        <img src="assets/img/logotipo-white.svg" class="img-fluid text-white" width="100" alt="Tu time">
+                    </a>
+        
+                    <div class="menu_navbar d-flex align-items-center gap-1">
+                        <div class="dropdown" id="languageDropdown">
+                            <button class="btn dropdown-toggle border-0" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img width="24" height="24" src="assets/img/spain.png" alt="Español" />
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                <li>
+                                    <a class="dropdown-item flag-item" data-language="es" href="#">
+                                        <img width="24" height="24" src="assets/img/spain.png" alt="Español" /> Español
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item flag-item" data-language="en" href="#">
+                                        <img width="24" height="24" src="assets/img/great-britain.png" alt="English" /> English
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
 
-            <div class="dropdown" id="languageDropdown">
-                <button class="btn dropdown-toggle border-0 text-white" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img width="24" height="24" src="assets/img/spain.png" alt="Español" />
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                    <li>
-                        <a class="dropdown-item flag-item" data-language="es" href="#">
-                            <img width="24" height="24" src="assets/img/spain.png" alt="Español" /> Español
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item flag-item" data-language="en" href="#">
-                            <img width="24" height="24" src="assets/img/great-britain.png" alt="English" /> English
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            
-        </div>
-    </nav>
+                        <div class="burger_menu">
+                            <input type="checkbox" id="menu_checkbox" aria-label="Toggle menu" />
+                            <label for="menu_checkbox">
+                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
+                            </label>
+                        </div>
 
-    <div class="main_container">
-
-        <div class="calculator_card">
-            <div class="card_header">
-                <h1 data-section="main_form" data-value="title">Work time calculator</h1>
-                <span class="btn btn_play border-0" data-bs-toggle="modal" data-bs-target="#videoModal">
-                    <svg width="55" height="56" viewBox="0 0 55 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M47.8194 28.1202C47.8194 16.8245 38.655 7.66016 27.3594 7.66016C16.0638 7.66016 6.89941 16.8245 6.89941 28.1202C6.89941 39.4158 16.0638 48.5802 27.3594 48.5802C38.655 48.5802 47.8194 39.4158 47.8194 28.1202Z"
-                            stroke="black" stroke-width="3.41" stroke-miterlimit="10" />
-                        <path
-                            d="M23.1312 36.4785L35.3273 29.1108C35.4973 29.0072 35.6378 28.8616 35.7353 28.6881C35.8328 28.5145 35.884 28.3188 35.884 28.1197C35.884 27.9207 35.8328 27.7249 35.7353 27.5514C35.6378 27.3778 35.4973 27.2323 35.3273 27.1287L23.1312 19.761C22.9564 19.6562 22.7569 19.5999 22.5531 19.5977C22.3493 19.5955 22.1486 19.6476 21.9716 19.7486C21.7946 19.8496 21.6477 19.9958 21.5458 20.1723C21.444 20.3489 21.3909 20.5493 21.3921 20.7531V35.4864C21.3909 35.6902 21.444 35.8906 21.5458 36.0671C21.6477 36.2436 21.7946 36.3899 21.9716 36.4909C22.1486 36.5918 22.3493 36.6439 22.5531 36.6417C22.7569 36.6396 22.9564 36.5832 23.1312 36.4785Z"
-                            fill="black" />
-                    </svg>
-                </span>                
-            </div>
-            <div class="card_body">
-                <div class="form_row">
-                    <div class="input_group">
-                        <label for="horaEntrada" data-section="main_form" data-value="start_time">In</label>
-                        <input type="time" id="horaEntrada" value="10:00" />
-                    </div>
-                    <div class="input_group">
-                        <label for="horaSalida" data-section="main_form" data-value="finish_time">Out</label>
-                        <input type="time" id="horaSalida" value="11:00" />
-                    </div>
-                    <div class="input_group">
-                        <label for="descanso" data-section="main_form" data-value="break_time">Break</label>
-                        <input type="number" id="descanso" value="" placeholder="Mins" pattern="[0-9]*" autocomplete="off"/>
                     </div>
                 </div>
-                <div id="calendarioContainer"></div>
-                
-
-                <div class="form_row">
-                    <div class="input_group">
-                        <label data-section="main_form" data-value="calendar"></label>
-                        <button type="input" class="btn rounded-2 bg-white" id="seleccionarFechas">
-                            <span data-section="main_form" data-value="calendar_btn"></span>
-                        </button>
+            </nav>
+        
+            <div class="main_container">
+        
+                <div class="calculator_card">
+                    <div class="card_header">
+                        <h1 data-section="main_form" data-value="title">Work time calculator</h1>
+                        <span class="btn btn_play border-0" data-bs-toggle="modal" data-bs-target="#videoModal">
+                            <svg width="55" height="56" viewBox="0 0 55 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M47.8194 28.1202C47.8194 16.8245 38.655 7.66016 27.3594 7.66016C16.0638 7.66016 6.89941 16.8245 6.89941 28.1202C6.89941 39.4158 16.0638 48.5802 27.3594 48.5802C38.655 48.5802 47.8194 39.4158 47.8194 28.1202Z"
+                                    stroke="black" stroke-width="3.41" stroke-miterlimit="10" />
+                                <path
+                                    d="M23.1312 36.4785L35.3273 29.1108C35.4973 29.0072 35.6378 28.8616 35.7353 28.6881C35.8328 28.5145 35.884 28.3188 35.884 28.1197C35.884 27.9207 35.8328 27.7249 35.7353 27.5514C35.6378 27.3778 35.4973 27.2323 35.3273 27.1287L23.1312 19.761C22.9564 19.6562 22.7569 19.5999 22.5531 19.5977C22.3493 19.5955 22.1486 19.6476 21.9716 19.7486C21.7946 19.8496 21.6477 19.9958 21.5458 20.1723C21.444 20.3489 21.3909 20.5493 21.3921 20.7531V35.4864C21.3909 35.6902 21.444 35.8906 21.5458 36.0671C21.6477 36.2436 21.7946 36.3899 21.9716 36.4909C22.1486 36.5918 22.3493 36.6439 22.5531 36.6417C22.7569 36.6396 22.9564 36.5832 23.1312 36.4785Z"
+                                    fill="black" />
+                            </svg>
+                        </span>                
                     </div>
-                </div>
-
-                <hr/>
-
-                <div class="form_row">
-                    <div class="input_group">
-                        <label for="precio_hora" data-section="main_form" data-value="price_hour">Price/Hour</label>
-                        <div class="precio_hora_container ">
-                            <input type="number" id="precio_hora" value="10" min="1" step="any" inputmode="decimal" autocomplete="off" />
-                            <select name="moneda" id="moneda">
-                                <option value="£">£</option>
-                                <option value="€">€</option>
-                                <option value="$">$</option>
-                            </select>
+                    <div class="card_body">
+                        <div class="form_row">
+                            <div class="input_group">
+                                <label for="horaEntrada" data-section="main_form" data-value="start_time">In</label>
+                                <input type="time" id="horaEntrada" value="10:00" />
+                            </div>
+                            <div class="input_group">
+                                <label for="horaSalida" data-section="main_form" data-value="finish_time">Out</label>
+                                <input type="time" id="horaSalida" value="11:00" />
+                            </div>
+                            <div class="input_group">
+                                <label for="descanso" data-section="main_form" data-value="break_time">Break</label>
+                                <input type="number" id="descanso" value="" placeholder="Mins" pattern="[0-9]*" autocomplete="off"/>
+                            </div>
+                        </div>
+                        <div id="calendarioContainer"></div>
+                        
+        
+                        <div class="form_row">
+                            <div class="input_group">
+                                <label data-section="main_form" data-value="calendar"></label>
+                                <button type="input" class="btn rounded-2 bg-white" id="seleccionarFechas">
+                                    <span data-section="main_form" data-value="calendar_btn"></span>
+                                </button>
+                            </div>
+                        </div>
+        
+                        <hr/>
+        
+                        <div class="form_row">
+                            <div class="input_group">
+                                <label for="precio_hora" data-section="main_form" data-value="price_hour">Price/Hour</label>
+                                <div class="precio_hora_container ">
+                                    <input type="number" id="precio_hora" value="10" min="1" step="any" inputmode="decimal" autocomplete="off" />
+                                    <select name="moneda" id="moneda">
+                                        <option value="£">£</option>
+                                        <option value="€">€</option>
+                                        <option value="$">$</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input_group">
+                                <label for="total_horas" data-section="main_form" data-value="total_hours">Total Hours</label>
+                                <input type="button" id="total_horas" class="disabled" value="00:00" disabled/>
+                            </div>
+                        </div>
+        
+                        <div class="form_row">
+                            <div class="input_group">
+                                <label for="monto_total" data-section="main_form" data-value="total_amount">Total Amount</label>
+                                <input type="button" id="monto_total" class="disabled" value="£0.00" disabled/>
+                            </div>
+                        </div>
+        
+                        <hr/>
+        
+                        <div class="form_row">
+                            <div class="input_group">
+                                <button class="print_button border-0 position-relative"  data-bs-toggle="modal" data-bs-target="#resumenModal" >
+                                    <span data-section="main_form" data-value="resume_btn">Summary</span>
+                                    <span class="badge text-bg-light rounded-pill" id="total_dias_selected"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="input_group">
-                        <label for="total_horas" data-section="main_form" data-value="total_hours">Total Hours</label>
-                        <input type="button" id="total_horas" class="disabled" value="00:00" disabled/>
-                    </div>
-                </div>
-
-                <div class="form_row">
-                    <div class="input_group">
-                        <label for="monto_total" data-section="main_form" data-value="total_amount">Total Amount</label>
-                        <input type="button" id="monto_total" class="disabled" value="£0.00" disabled/>
-                    </div>
-                </div>
-
-                <hr/>
-
-                <div class="form_row">
-                    <div class="input_group">
-                        <button class="print_button border-0 position-relative"  data-bs-toggle="modal" data-bs-target="#resumenModal" >
-                            <span data-section="main_form" data-value="resume_btn">Summary</span>
-                            <span class="badge text-bg-light rounded-pill" id="total_dias_selected"></span>
-                        </button>
-                    </div>
+                    <a href="termsConditions.html" rel="nofollow" style="color:black;" target=”_blank”>Terms and Conditions</a>
                 </div>
             </div>
-        </div>
+        </main>
+        
+        <aside class="sidebar_menu">
+            <ul class="menu_items">
+                <li><a href="about.html">Nosotros</a></li>
+                <li><a href="legal.html">Información Legal</a></li>
+                <li><a href="#">Encuesta</a></li>
+                <li><a href="#">Anuncia en Tu time</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+
+            <div class="social_media">
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-brand-x">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+                        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+                    </svg>                
+                </a>
+
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-brand-instagram">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
+                        <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                        <path d="M16.5 7.5l0 .01" />
+                    </svg>
+                </a>
+            </div>
+
+            <div class="addiconal_info">
+                <p>@tutimeofficial</p>
+                <p>#miTimeTutime</p>
+            </div>
+
+            <div class="rights">
+                <p class="mb-0">
+                    @<script>document.write(new Date().getFullYear())</script>
+                    Todos los derechos reservados
+                </p>
+            </div>
+
+        </aside>
     </div>
 
     <!-- Modal Resume -->
@@ -175,7 +259,7 @@
                     </div>
                     <button class="print_button border-0 px-4" id="saveButton" data-bs-toggle="modal" data-bs-target="#nameModal" data-section="resume_modal"
                         data-value="btn_save" disabled>
-                        Save
+                        Continue
                     </button>
                 </div>
             </div>
@@ -221,7 +305,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Modal Write your name -->
     <div class="modal" id="nameModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="nameModalLabel" aria-hidden="true">
@@ -306,6 +389,16 @@
     <script src="assets/js/calculator.js"></script>
     <script src="assets/js/language.js"></script>
     <script src="assets/js/video.js"></script>
+    <script src="assets/js/script.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L3WT4ZFZQ1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-L3WT4ZFZQ1');
+</script>
 
 </body>
 

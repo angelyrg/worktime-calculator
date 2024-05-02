@@ -1,0 +1,31 @@
+
+.about_content{
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.about_content h1{
+    color: #9E9E9E;
+    text-align: left;
+}
+
+
+.founder_message{
+    max-width: 550px;
+    margin: 30px auto;
+}
+
+.founder_message h2{
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+}
+
+.menu_bg{
+    background-color: #FFF;
+}
+
+.menu_bg a{
+    color: #000 !important;
+}
