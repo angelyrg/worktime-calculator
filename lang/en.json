@@ -2,6 +2,12 @@
     "navbar" :{
         "change_lang" : "Change Language"
     },
+    "menu" : {
+        "about" : "About Us",
+        "legal" : "Legal",
+        "quote" : "Get a quote",
+        "contact" : "Contact"
+    },
     "main_form" : {
         "title" : "Work time calculator",
         "start_time" : "In",

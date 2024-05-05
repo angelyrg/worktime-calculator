@@ -1,6 +1,12 @@
 {
-    "navbar" :{
+    "navbar" : {
         "change_lang" : "Cambiar idioma"
+    },
+    "menu" : {
+        "about" : "Nosotros",
+        "legal" : "Legal",
+        "quote" : "Anuncia en Tu-time",
+        "contact" : "Contacto"
     },
     "main_form" : {
         "title" : "Calculadora de tiempo de trabajo",
