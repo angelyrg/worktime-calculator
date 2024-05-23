@@ -1,5 +1,6 @@
 let fechasSeleccionadas = {};
 let totalResumen = {
+  precioHora: 0,
   totalMonto: 0,
   totalHoras: 0,
   totalHorasFormateado: "00:00",
@@ -102,6 +103,7 @@ function actualizarTotalResumenDATA(dates) {
     .padStart(2, "0")}`;
 
   totalResumen = {
+    precioHora: pagoPorHora.toFixed(2),
     totalHoras: totalHorasResumen.toFixed(2),
     totalMonto: totalMontoResumen.toFixed(2),
     totalHorasFormateado: totalHorasFormateado,
@@ -230,6 +232,7 @@ function updateResumenFormUI(){
   $("#total_horas").val(totalResumen.totalHorasFormateado);
   $("#monto_total").val(`${$("#moneda").val()}${totalResumen.totalMonto}`);
 
+  $("#priceHoursModal").text(`${$("#moneda").val()}${totalResumen.precioHora}`);
   $("#totalHoursModal").text(totalResumen.totalHorasFormateado);
   $("#totalAmountModal").text(`${$("#moneda").val()}${totalResumen.totalMonto}`);
 }

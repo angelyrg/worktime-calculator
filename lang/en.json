@@ -33,6 +33,7 @@
         "btn_save": "Continue",
         "btn_continue": "Continue",
         "btn_download": "Download",
+        "resume_price_hour": "Price/Hour:",
         "resume_total_hours": "Total hours:",
         "resume_total_amount": "Total amount:",
         "btn_edit": "Edit",
