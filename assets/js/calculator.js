@@ -120,10 +120,12 @@ function actualizarTablaResumenUI(dates) {
     const fechaFormateada = `${partesFecha[2]}/${partesFecha[1]}/${partesFecha[0].substring(2)}`; // "dd/mm/yy"
 
     let detalles = dates[fecha];
-    let descansoFormateado =
-      !detalles.descanso || detalles.descanso === "0"
-        ? "00:00"
-        : "00:" + detalles.descanso;
+
+    const totalDescansoHoras = detalles.descanso / 60;
+    const horasDescanso = Math.floor(totalDescansoHoras);
+    const minutosDescanso = Math.round((totalDescansoHoras - horasDescanso) * 60);
+    const descansoFormateado = `${horasDescanso}:${minutosDescanso.toString().padStart(2, "0")}`;
+
     container.innerHTML += `
           <tr>
               <td>
@@ -274,6 +276,21 @@ function eliminarFecha(fecha) {
   actualizarTotalResumenDATA(fechasSeleccionadas);
   updateTotalDiasCounterUI();
   updateResumenFormUI();
+}
+
+function convertirMinutosAFormatoHHMM(mins){
+  // Convertir minutos totales a horas en formato decimal
+  const totalhoras = mins / 60;
+
+  const horas = Math.floor(totalhoras);
+  const minutos = Math.round((totalhoras - horas) * 60);
+
+  const totalHorasFormateado = `${horas}:${minutos.toString().padStart(2, "0")}`;
+  
+  return {
+    'hh' : horas,
+    'mm' : minutos
+  };
 }
 
 async function cargarTraducciones() {
