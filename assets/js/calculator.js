@@ -40,7 +40,7 @@ document.getElementById("seleccionarFechas").addEventListener("click", () => {
       dateFormat: "Y-m-d",
       enableTime: false,
       defaultDate: fechasPredeterminadas, // Establece las fechas seleccionadas como fechas predeterminadas
-      disable: fechasPredeterminadas, // Deshabilita las fechas que ya han sido seleccionadas
+      // disable: fechasPredeterminadas, // Deshabilita las fechas que ya han sido seleccionadas
       onClose: function (selectedDates) {
           let diasAgregados = 0;
           selectedDates.forEach((date) => {
@@ -114,30 +114,42 @@ function actualizarTablaResumenUI(dates) {
   const container = document.getElementById("fechasSeleccionadasContainer");
   container.innerHTML = "";
   let contador = 1;
-  Object.keys(dates).forEach((fecha) => {
 
-    const partesFecha = fecha.split('-'); // ["yyyy", "mm", "dd"]
-    const fechaFormateada = `${partesFecha[2]}/${partesFecha[1]}/${partesFecha[0].substring(2)}`; // "dd/mm/yy"
+  // Obtener y ordenar las fechas
+  const fechasOrdenadas = Object.keys(dates).sort(
+    (a, b) => new Date(a) - new Date(b)
+  );
+
+  // Iterar sobre las fechas ordenadas
+  fechasOrdenadas.forEach((fecha) => {
+    const partesFecha = fecha.split("-"); // ["yyyy", "mm", "dd"]
+    const fechaFormateada = `${partesFecha[2]}/${
+      partesFecha[1]
+    }/${partesFecha[0].substring(2)}`; // "dd/mm/yy"
 
     let detalles = dates[fecha];
 
     const totalDescansoHoras = detalles.descanso / 60;
     const horasDescanso = Math.floor(totalDescansoHoras);
-    const minutosDescanso = Math.round((totalDescansoHoras - horasDescanso) * 60);
-    const descansoFormateado = `${horasDescanso}:${minutosDescanso.toString().padStart(2, "0")}`;
+    const minutosDescanso = Math.round(
+      (totalDescansoHoras - horasDescanso) * 60
+    );
+    const descansoFormateado = `${horasDescanso}:${minutosDescanso
+      .toString()
+      .padStart(2, "0")}`;
 
     container.innerHTML += `
-          <tr>
-              <td>
-                <input type="checkbox" class="row-checkbox" data-fecha="${fecha}" />
-              </td>
-              <td>${contador}</td>
-              <td>${fechaFormateada}</td>
-              <td>${detalles.entrada}</td>
-              <td>${detalles.salida}</td>
-              <td>${descansoFormateado}</td>
-              <td>${detalles.totalHoras}</td>
-          </tr>`;
+      <tr>
+          <td>
+            <input type="checkbox" class="row-checkbox" data-fecha="${fecha}" />
+          </td>
+          <td>${contador}</td>
+          <td>${fechaFormateada}</td>
+          <td>${detalles.entrada}</td>
+          <td>${detalles.salida}</td>
+          <td>${descansoFormateado}</td>
+          <td>${detalles.totalHoras}</td>
+      </tr>`;
     contador++;
   });
 
@@ -146,12 +158,26 @@ function actualizarTablaResumenUI(dates) {
   });
 
   verificarCheckboxesSeleccionados();
-
 }
 
+// Añadir eventos a los checkboxes
+document.getElementById("selectAll").addEventListener("change", function() {
+  const isChecked = this.checked;
+  document.querySelectorAll(".row-checkbox").forEach((checkbox) => {
+    checkbox.checked = isChecked;
+  });
+  verificarCheckboxesSeleccionados();
+});
+
 function verificarCheckboxesSeleccionados() {
-  const alMenosUnoSeleccionado =
-    document.querySelector(".row-checkbox:checked") !== null;
+  const alMenosUnoSeleccionado = document.querySelector(".row-checkbox:checked") !== null;
+  
+
+  const checkboxes = document.querySelectorAll(".row-checkbox");
+  const todosSeleccionados =
+    checkboxes.length > 0 &&
+    Array.from(checkboxes).every((checkbox) => checkbox.checked);
+  document.getElementById("selectAll").checked = todosSeleccionados;
   
   document.getElementById("btn_edit").disabled = !alMenosUnoSeleccionado;
   document.getElementById("btn_remove").disabled = !alMenosUnoSeleccionado;
@@ -278,20 +304,6 @@ function eliminarFecha(fecha) {
   updateResumenFormUI();
 }
 
-function convertirMinutosAFormatoHHMM(mins){
-  // Convertir minutos totales a horas en formato decimal
-  const totalhoras = mins / 60;
-
-  const horas = Math.floor(totalhoras);
-  const minutos = Math.round((totalhoras - horas) * 60);
-
-  const totalHorasFormateado = `${horas}:${minutos.toString().padStart(2, "0")}`;
-  
-  return {
-    'hh' : horas,
-    'mm' : minutos
-  };
-}
 
 async function cargarTraducciones() {
   const preferredLanguage = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0];
@@ -385,7 +397,17 @@ async function descargarPDF(fechasSeleccionadas) {
         yPosition = marginTop;
       }
       const { entrada, salida, descanso, totalHoras } = fechasSeleccionadas[fecha];
-      const descansoFormateado = !descanso || descanso === "0" ? "00:00" : "00:" + descanso;
+
+
+
+      const totalDescansoHoras = descanso / 60;
+      const horasDescanso = Math.floor(totalDescansoHoras);
+      const minutosDescanso = Math.round(
+        (totalDescansoHoras - horasDescanso) * 60
+      );
+      const descansoFormateado = `${horasDescanso}:${minutosDescanso
+        .toString()
+        .padStart(2, "0")}`;
 
       const partesFecha = fecha.split('-'); // ["yyyy", "mm", "dd"]
       const fechaFormateada = `${partesFecha[2]}/${partesFecha[1]}/${partesFecha[0].substring(2)}`; // "dd/mm/yy"
@@ -426,9 +448,17 @@ async function descargarPDF(fechasSeleccionadas) {
       (yPosition += 6)
     );
 
-    doc.save("resume.pdf");
+    doc.save("Worktime_resume_Tu-Time.pdf");
   };
 }
+
+$("#seeResumenModalBtn").on('click', function(){
+  actualizarTotalResumenDATA(fechasSeleccionadas);
+  actualizarTablaResumenUI(fechasSeleccionadas);
+  updateTotalDiasCounterUI();
+  updateResumenFormUI();
+  $("#resumenModal").modal("show");
+});
 
 $("#nameModal").on("shown.bs.modal", function () {
   setTimeout(function () {

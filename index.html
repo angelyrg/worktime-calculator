@@ -110,7 +110,7 @@
                             <div class="input_group">
                                 <label for="descanso">
                                     <span data-section="main_form" data-value="break_time">Break</span>
-                                    <span data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tiempo libre no pagado.">
+                                    <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tiempo libre no pagado.">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-alert-circle">
@@ -142,7 +142,7 @@
                             <div class="input_group">
                                 <label for="precio_hora" data-section="main_form" data-value="price_hour">Price/Hour</label>
                                 <div class="precio_hora_container ">
-                                    <input type="number" id="precio_hora" value="0" min="1" step="any" inputmode="decimal" autocomplete="off" />
+                                    <input type="number" id="precio_hora" placeholder="0" min="1" step="any" inputmode="decimal" autocomplete="off" />
                                     <select name="moneda" id="moneda">
                                         <option value="£">£</option>
                                         <option value="€">€</option>
@@ -167,7 +167,7 @@
         
                         <div class="form_row">
                             <div class="input_group">
-                                <button class="print_button border-0 position-relative"  data-bs-toggle="modal" data-bs-target="#resumenModal" >
+                                <button class="print_button border-0 position-relative" id="seeResumenModalBtn" >
                                     <span data-section="main_form" data-value="resume_btn">Summary</span>
                                     <span class="badge text-bg-light rounded-pill" id="total_dias_selected"></span>
                                 </button>
@@ -246,7 +246,9 @@
                         <table class="table table-sm">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <th>
+                                        <input type="checkbox" id="selectAll" class="selectAll-checkbox" />
+                                    </th>
                                     <th>#</th>
                                     <th data-section="resume_modal" data-value="table_date">Date</th>
                                     <th data-section="resume_modal" data-value="table_start">In</th>
@@ -298,7 +300,19 @@
                                 <input type="time" id="modalSalidaEdit" class="form-control" />
                             </div>
                             <div class="form-group col-4">
-                                <label for="modalDescansoEdit" data-section="resume_modal" data-value="edit_break">Break:</label>
+                                <label for="modalDescansoEdit">
+                                    <span data-section="resume_modal" data-value="edit_break">Break</span>
+                                    <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tiempo libre no pagado.">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-alert-circle">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                                            <path d="M12 8v4" />
+                                            <path d="M12 16h.01" />
+                                        </svg>
+                                    </span>
+                                </label>
                                 <input type="number" id="modalDescansoEdit" class="form-control" pattern="[0-9]*" autocomplete="off" />
                             </div>
                         </div>

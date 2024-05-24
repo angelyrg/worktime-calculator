@@ -250,6 +250,13 @@ input, select{
     width: 17px;
     height: 17px;
 }
+.selectAll-checkbox{
+    -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
+    appearance: checkbox;
+    width: 17px;
+    height: 17px;
+}
 
 select:focus{
     outline: none;
