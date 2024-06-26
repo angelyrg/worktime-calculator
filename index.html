@@ -42,9 +42,9 @@
 
 <body class="body">
 
-    <div class="contenido">
+    <div class="contenido contenido_principal">
         <main>
-            <nav class="navbar sticky-top">
+            <nav class="navbar bg-index sticky-top">
                 <div class="container d-flex justify-content-between">
                     <a class="navbar-brand text-white" href="index.html" >
                         <img src="assets/img/logotipo-white.svg" class="img-fluid text-white" width="100" alt="Tu time">
@@ -181,6 +181,7 @@
         
         <aside class="sidebar_menu">
             <ul class="menu_items">
+                <li><a href="/" data-section="menu" data-value="home">Home</a></li>
                 <li><a href="about.html" data-section="menu" data-value="about">About Us</a></li>
                 <li><a href="legal.html" data-section="menu" data-value="legal">Legal</a></li>
                 <li><a href="advertising.html" data-section="menu" data-value="quote">Get a quote</a></li>
@@ -188,7 +189,7 @@
             </ul>
 
             <div class="social_media">
-                <a href="#">
+                <a href="https://x.com/tutime_official" target="_blank" rel="noopener noreferrer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="icon icon-tabler icons-tabler-outline icon-tabler-brand-x">
@@ -198,7 +199,7 @@
                     </svg>                
                 </a>
 
-                <a href="#">
+                <a href="https://www.instagram.com/tutimeofficial" target="_blank" rel="noopener noreferrer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="icon icon-tabler icons-tabler-outline icon-tabler-brand-instagram">
@@ -263,13 +264,13 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <div class="text-start">
-                        <span data-section="resume_modal" data-value="resume_price_hour">Price/Hour:</span>
+                        <span class="fw-bolder" data-section="resume_modal" data-value="resume_price_hour">Price/Hour:</span>
                         <span id="priceHoursModal"></span>
                         <br>
-                        <span data-section="resume_modal" data-value="resume_total_hours">Total hours:</span>
+                        <span class="fw-bolder" data-section="resume_modal" data-value="resume_total_hours">Total hours:</span>
                         <span id="totalHoursModal"></span>
                         <br>
-                        <span data-section="resume_modal" data-value="resume_total_amount">Total amount:</span>
+                        <span class="fw-bolder" data-section="resume_modal" data-value="resume_total_amount">Total amount:</span>
                         <span id="totalAmountModal"></span>
                     </div>
                     <button class="print_button border-0 px-4" id="saveButton" data-bs-toggle="modal" data-bs-target="#nameModal" data-section="resume_modal"

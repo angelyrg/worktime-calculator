@@ -3,6 +3,7 @@
         "change_lang" : "Change Language"
     },
     "menu" : {
+        "home" : "Home",
         "about" : "About Us",
         "legal" : "Legal",
         "quote" : "Get a quote",

@@ -15,8 +15,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
     
+    setRandonBgImage();
 });
 
+function setRandonBgImage() {
+  const images = [
+    "https://images.pexels.com/photos/858117/pexels-photo-858117.jpeg?auto=compress",
+    "https://images.pexels.com/photos/4668563/pexels-photo-4668563.jpeg?auto=compress",
+    "https://images.pexels.com/photos/4668541/pexels-photo-4668541.jpeg?auto=compress",
+    "https://images.pexels.com/photos/157660/business-lady-business-girl-businessman-157660.jpeg?auto=compress",
+  ];
+
+  const randomImage = images[Math.floor(Math.random() * images.length)];
+
+  const contentPrincipal = document.querySelector(".contenido_principal");
+  contentPrincipal.style.backgroundImage = "url(" + randomImage + ")";
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   const checkbox = document.getElementById("menu_checkbox");

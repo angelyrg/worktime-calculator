@@ -15,68 +15,131 @@
 
 <body>
 
-    <nav class="navbar bg-white sticky-top">
-        <div class="container d-flex justify-content-between">
-            <a class="navbar-brand text-white" href="index.html" >
-                <img src="assets/img/logotipo.svg" class="img-fluid text-white" width="100" alt="Tu time">
-            </a>
-
-            <div class="menu_navbar d-flex align-items-center gap-1">
-                <div class="dropdown" id="languageDropdown">
-                    <button class="btn dropdown-toggle border-0" type="button" id="dropdownMenuButton"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img width="24" height="24" src="assets/img/spain.png" alt="Español" />
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                        <li>
-                            <a class="dropdown-item flag-item" data-language="es" href="#">
-                                <img width="24" height="24" src="assets/img/spain.png" alt="Español" /> Español
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item flag-item" data-language="en" href="#">
-                                <img width="24" height="24" src="assets/img/great-britain.png" alt="English" /> English
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="burger_menu">
-                    <input type="checkbox" id="menu_checkbox" aria-label="Toggle menu" />
-                    <label for="menu_checkbox">
-                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
-                    </label>
-                </div>
-
-            </div>
-        </div>
-    </nav>
-
+    <div class="">
+        <main>
+            <nav class="navbar bg-dark sticky-top">
+                <div class="container d-flex justify-content-between">
+                    <a class="navbar-brand text-white" href="index.html">
+                        <img src="assets/img/logotipo-white.svg" class="img-fluid text-white" width="100" alt="Tu time">
+                    </a>
     
-    <main class="about_content">
-
-        <h1>About Us</h1>
-        <img src="assets/img/about_us.png" class="img-fluid" alt="">
-
-        <div class="founder_message">
-            <h2>Message from the founder</h2>
-            <p>
-                I have seen the problem of many people who work day to day and do not have a tool that allows them to calculate their
-                work time and the amount of how much they should charge, many use paper or simply do it by hand, there are other tools
-                that are not as intuitive and easy to use.
-            </p>
-            <p>
-                My focus has always been to facilitate the user experience and simplicity in the use of the tools for all people.
-            </p>
-            <p>
-                I make this tool available free of charge to everyone in the world who wants a tool to calculate their pay and hours
-                worked.
-            </p>
-
-            <img src="assets/img/signature.png" width="140px" alt="">
-        </div>
-        
-    </main>
+                    <div class="menu_navbar d-flex align-items-center gap-1">
+                        <div class="dropdown" id="languageDropdown">
+                            <button class="btn dropdown-toggle border-0" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img width="24" height="24" src="assets/img/spain.png" alt="Español" />
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                <li>
+                                    <a class="dropdown-item flag-item" data-language="es" href="#">
+                                        <img width="24" height="24" src="assets/img/spain.png" alt="Español" /> Español
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item flag-item" data-language="en" href="#">
+                                        <img width="24" height="24" src="assets/img/great-britain.png" alt="English" />
+                                        English
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+    
+                        <div class="burger_menu">
+                            <input type="checkbox" id="menu_checkbox" aria-label="Toggle menu" />
+                            <label for="menu_checkbox">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M4 6l16 0" />
+                                    <path d="M4 12l16 0" />
+                                    <path d="M4 18l16 0" />
+                                </svg>
+                            </label>
+                        </div>
+    
+                    </div>
+                </div>
+            </nav>
+    
+            <main class="about_content mt-4">
+            
+                <h1>About Us</h1>
+                <img src="assets/img/about_us.png" class="img-fluid" alt="">
+            
+                <div class="founder_message">
+                    <h2>Message from the founder</h2>
+                    <p>
+                        I have seen the problem of many people who work day to day and do not have a tool that allows them to
+                        calculate their
+                        work time and the amount of how much they should charge, many use paper or simply do it by hand, there are
+                        other tools
+                        that are not as intuitive and easy to use.
+                    </p>
+                    <p>
+                        My focus has always been to facilitate the user experience and simplicity in the use of the tools for all
+                        people.
+                    </p>
+                    <p>
+                        I make this tool available free of charge to everyone in the world who wants a tool to calculate their pay
+                        and hours
+                        worked.
+                    </p>
+            
+                    <img src="assets/img/signature.png" width="140px" alt="">
+                </div>
+            
+            </main>
+        </main>
+    
+        <aside class="sidebar_menu sidebar_menu_dark">
+            <ul class="menu_items">
+                <li><a href="/" data-section="menu" data-value="home">Home</a></li>
+                <li><a href="about.html" data-section="menu" data-value="about">About Us</a></li>
+                <li><a href="legal.html" data-section="menu" data-value="legal">Legal</a></li>
+                <li><a href="advertising.html" data-section="menu" data-value="quote">Get a quote</a></li>
+                <li><a href="contact.html" data-section="menu" data-value="contact">Contact</a></li>
+            </ul>
+    
+            <div class="social_media">
+                <a href="https://x.com/tutime_official" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-brand-x">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+                        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+                    </svg>
+                </a>
+    
+                <a href="https://www.instagram.com/tutimeofficial" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-brand-instagram">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
+                        <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                        <path d="M16.5 7.5l0 .01" />
+                    </svg>
+                </a>
+            </div>
+    
+            <div class="addiconal_info">
+                <p>@tutimeofficial</p>
+                <p>#miTimeTutime</p>
+            </div>
+    
+            <div class="rights">
+                <p class="mb-0">
+                    @
+                    <script>document.write(new Date().getFullYear())</script>
+                    Todos los derechos reservados
+                </p>
+            </div>
+    
+        </aside>
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

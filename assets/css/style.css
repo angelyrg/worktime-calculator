@@ -8,12 +8,16 @@
 }
 
 .contenido{
-    /* background-image: url('https://images.pexels.com/photos/858117/pexels-photo-858117.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); */
-    background-image: url('https://images.pexels.com/photos/858117/pexels-photo-858117.jpeg');
-    background-position: center;
-    background-size: cover;
     font-size: 17px;
     display: flex;
+}
+
+.contenido_principal{
+    /* background-image: url('https://images.pexels.com/photos/858117/pexels-photo-858117.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); */
+    /* background-image: url('https://images.pexels.com/photos/858117/pexels-photo-858117.jpeg'); */
+    background-image: url('https://images.pexels.com/photos/5558228/pexels-photo-5558228.jpeg?auto=compress');
+    background-position: center;
+    background-size: cover;
 }
 
 *{
@@ -46,6 +50,31 @@ aside.sidebar_menu{
     animation: all 3s ease-in-out !important;
 }
 
+aside.sidebar_menu_dark{
+    background-color: #212529;
+    color: #FFFFFF;
+}
+
+aside.sidebar_menu_dark .menu_items li a{
+    color: #FFFFFF;
+}
+
+aside.sidebar_menu_dark .addiconal_info p{
+    color: #c7c6c6;
+}
+aside.sidebar_menu_dark .rights p{
+    color: #c7c6c6;
+}
+
+
+aside.sidebar_menu_dark .social_media a{
+    text-decoration: none;
+    color: #c7c6c6;
+}
+
+aside.sidebar_menu_dark .social_media a:hover{
+    color: #ffffff;
+}
 
 
 .menu_items{
@@ -122,6 +151,9 @@ aside.sidebar_menu{
     color: #000;
 }
 
+.bg-index{
+    background-color: rgba(0, 0, 0, 0.1);
+}
 
 #languageDropdown button{
     color: white;
@@ -158,7 +190,7 @@ aside.sidebar_menu{
     background-color: rgba(255, 255, 255, 0.6);
     max-width: 400px;
     border-radius: 20px;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.5); 
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.5);
     padding: 20px;
 }
 
@@ -182,7 +214,7 @@ aside.sidebar_menu{
     gap: 10px;
     margin: 20px 0;
 }
-  
+
 
 .input_group {
     text-align: center;
@@ -238,9 +270,13 @@ aside.sidebar_menu{
 /* Necesary for Iphone */
 input, select{
     -webkit-appearance: none;
-    -webkit-text-fill-color: #000000;
+    /* -webkit-text-fill-color: #000000; */
     opacity: 1;
     cursor: pointer;
+}
+
+input::placeholder{
+    color: #DBDBDB;
 }
 
 .row-checkbox{
@@ -383,7 +419,7 @@ input.disabled:focus, input.disabled:active, input.disabled:hover {
     .main_container{
         justify-content: center;
         padding-right: 0;
-    }    
+    }
 }
 
 @media (max-width: 576px) {
@@ -401,7 +437,7 @@ input.disabled:focus, input.disabled:active, input.disabled:hover {
         width: 100%;
         /* margin-top: 60px; */
         min-height: calc(100vh - 60px);
-        position: absolute;        
+        position: absolute;
         text-align: center;
         border-radius: 10px;
         /* transform: translateX(-100%); */
@@ -414,5 +450,5 @@ input.disabled:focus, input.disabled:active, input.disabled:hover {
     .burger_menu{
         display: block;
     }
-    
+
 }

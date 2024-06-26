@@ -3,6 +3,7 @@
         "change_lang" : "Cambiar idioma"
     },
     "menu" : {
+        "home" : "Inicio",
         "about" : "Nosotros",
         "legal" : "Legal",
         "quote" : "Anuncia en Tu-time",
